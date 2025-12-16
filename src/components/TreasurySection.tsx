@@ -42,7 +42,7 @@ function formatUsdValue(value: number): string {
 }
 
 export default function TreasurySection() {
-  const { formattedBalance, totalBalanceEth, isLoading, isError } = useTreasuryBalance()
+  const { formattedBalance, formattedEthOnly, formattedDaoTokens, totalBalanceEth, isLoading, isError } = useTreasuryBalance()
   const { price: ethPrice, isLoading: isPriceLoading, isError: isPriceError } = useEthPrice()
 
   const usdValue = ethPrice && totalBalanceEth ? totalBalanceEth * ethPrice : null
@@ -67,6 +67,7 @@ export default function TreasurySection() {
               <span
                 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[96px] font-semibold tracking-tight"
                 style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
+                title={isLoading || isError ? undefined : `${formattedEthOnly} ETH + ${formattedDaoTokens} DAO`}
               >
                 {isLoading ? '...' : isError ? 'Error' : `${formattedBalance} ETH`}
               </span>
