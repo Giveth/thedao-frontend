@@ -46,10 +46,16 @@ export const StatsSection = (): JSX.Element => {
           <div className="flex flex-col items-center gap-24 w-full">
             <img className="w-[264px] h-[264px]" alt="Logo" src="/logo.png" />
 
-            <h1 className="[font-family:'Arial-Regular',Helvetica] font-normal text-7xl tracking-[0] leading-[72px] whitespace-nowrap">
-              <span className="text-white leading-[0.1px]">THE DAO IS </span>
-              <span className="text-[#5cb75a]">BACK</span>
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="[font-family:'Arial-Regular',Helvetica] font-normal text-7xl tracking-[0] leading-[72px] text-white whitespace-nowrap">
+                THE DAO IS
+              </h1>
+              <img
+                src="/0c9839d575729ba6ad29b8bb56f26ede0a2f58d9.gif"
+                alt="Animated text"
+                className="h-[72px] w-auto"
+              />
+            </div>
           </div>
 
           <Button className="h-10 px-6 py-2 bg-[#ff3b38] hover:bg-[#ff3b38]/90 rounded-lg">
