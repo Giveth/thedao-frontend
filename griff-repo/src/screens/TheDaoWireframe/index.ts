@@ -1,0 +1,1 @@
+export { TheDaoWireframe } from "./TheDaoWireframe";
