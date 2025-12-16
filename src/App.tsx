@@ -27,7 +27,7 @@ function App() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight mb-8">
             THE DAO IS{' '}
             <TextType
-              text={["BACK.", "CODE.", "REVOLUTIONARY.", "AUTONOMOUS.", "BACK."]}
+              text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING.", "BACK."]}
               as="span"
               typingSpeed={190}
               deletingSpeed={50}
