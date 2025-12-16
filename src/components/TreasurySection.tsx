@@ -1,5 +1,6 @@
 import { useTreasuryBalance } from '../hooks/useTreasuryBalance'
 import { useEthPrice } from '../hooks/useEthPrice'
+import CountUp from './CountUp'
 
 const EthereumIcon = () => (
   <svg
@@ -30,16 +31,6 @@ const EthereumIcon = () => (
     <path fill="#fff" d="M0 212.32l127.96 75.638v-133.8z" opacity="0.6" />
   </svg>
 )
-
-function formatUsdValue(value: number): string {
-  if (value >= 1_000_000_000) {
-    return `$${(value / 1_000_000_000).toFixed(2)} Billion`
-  }
-  if (value >= 1_000_000) {
-    return `$${(value / 1_000_000).toFixed(2)} Million`
-  }
-  return `$${new Intl.NumberFormat('en-US').format(Math.round(value))}`
-}
 
 export default function TreasurySection() {
   const { formattedBalance, formattedEthOnly, formattedDaoTokens, totalBalanceEth, isLoading, isError } = useTreasuryBalance()
@@ -75,10 +66,20 @@ export default function TreasurySection() {
 
             {/* USD Value */}
             <p
-              className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal"
+              className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal"
               style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
             >
-              {isPriceLoading || isLoading ? '...' : isPriceError || isError ? 'Error' : usdValue ? formatUsdValue(usdValue) : '...'}
+              {isPriceLoading || isLoading ? '...' : isPriceError || isError ? 'Error' : usdValue ? (
+                usdValue >= 1_000_000_000 ? (
+                  <>
+                    $<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /> Billion
+                  </>
+                ) : (
+                  <>
+                    $<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /> Million
+                  </>
+                )
+              ) : '...'}
             </p>
 
             {/* Tagline */}
