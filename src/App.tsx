@@ -30,27 +30,27 @@ function App() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight mb-8">
             THE DAO IS{' '}
             <TextType
-              text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING.", "BACK."]}
+              text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING."]}
               as="span"
               typingSpeed={190}
               deletingSpeed={50}
               pauseDuration={1500}
               showCursor={true}
               cursorCharacter="|"
-              loop={false}
-              textColors={["#FF3C38", "#5CB75A", "#FF3C38", "#5CB75A", "#FF3C38"]}
+              loop={true}
+              textColors={["#FF3C38", "#5CB75A", "#FF3C38", "#5CB75A"]}
             />
           </h1>
-          
-          {/* Subtitle */}
-          <p className="text-white/70 text-lg md:text-xl max-w-xl mb-10">
-            Decentralized. Autonomous. Unstoppable. Join the next chapter of community-driven governance.
-          </p>
-          
+
           {/* CTA Button */}
-          <button className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm md:text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
+          <a
+            href="https://giveth.typeform.com/to/XB4mTMou"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm md:text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 inline-block"
+          >
             Get Involved
-          </button>
+          </a>
         </main>
       </section>
 

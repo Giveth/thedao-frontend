@@ -6,7 +6,7 @@ export default function Footer() {
           className="text-white/80 text-base text-center"
           style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
         >
-          © 2025 THEDAO. All rights reserved.
+          © 2025 TheDAO LLC. All rights reserved.
         </p>
       </div>
     </footer>
