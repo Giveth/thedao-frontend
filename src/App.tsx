@@ -1,6 +1,9 @@
 import daoLogo from '/dao-logo.svg'
 import TextType from './components/TextType'
 import TreasurySection from './components/TreasurySection'
+import CuratorsSection from './components/CuratorsSection'
+import WhyExistsSection from './components/WhyExistsSection'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -53,6 +56,15 @@ function App() {
 
       {/* Treasury Section */}
       <TreasurySection />
+
+      {/* Curators Section */}
+      <CuratorsSection />
+
+      {/* Why This Exists Section */}
+      <WhyExistsSection />
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
