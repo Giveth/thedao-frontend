@@ -21,10 +21,10 @@ const erc20BalanceOfAbi = [
   },
 ] as const
 
-// DAO token has 16 decimals, and each token = 0.1 ETH
-// So we need to convert: (tokenBalance / 10^16) * 0.1 ETH = tokenBalance / 10^17 ETH
-// In wei: tokenBalance * 10^18 / 10^17 = tokenBalance * 10 wei per smallest unit
-const DAO_TOKEN_TO_WEI_MULTIPLIER = 10n
+// DAO token has 16 decimals, and each token = 0.01 ETH
+// So we need to convert: (tokenBalance / 10^16) * 0.01 ETH = tokenBalance / 10^18 ETH
+// In wei: tokenBalance * 10^18 / 10^18 = tokenBalance * 1 wei per smallest unit
+const DAO_TOKEN_TO_WEI_MULTIPLIER = 1n
 
 export function useTreasuryBalance() {
   // ETH balances
