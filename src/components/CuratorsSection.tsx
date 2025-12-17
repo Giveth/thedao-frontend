@@ -42,7 +42,7 @@ const curatorsRow2 = [
 export default function CuratorsSection() {
   return (
     <section className="w-full px-4 py-16 md:py-24 relative">
-      <div className="max-w-5xl mx-auto flex flex-col items-center gap-16 relative z-10">
+      <div className="max-w-10xl mx-auto flex flex-col items-center gap-16 relative z-10">
         {/* Section Title */}
         <h2 className="text-white text-3xl md:text-6xl font-light text-center leading-tight">
           TheDAO Curators

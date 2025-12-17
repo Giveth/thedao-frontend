@@ -7,18 +7,18 @@ function HeroSection() {
 
   return (
     <section className="min-h-screen w-full flex flex-col items-center justify-center relative bg-linear-to-br from-dao-blue to-dao-blue-dark">
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-12">
+      <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-12 max-w-10xl mx-auto w-full">
         {/* Logo */}
         <div>
           <img 
             src={daoLogo} 
             alt="The DAO Logo" 
-            className="size-[200px] md:size-60 drop-shadow-logo"
+            className="size-[240px] md:size-60 drop-shadow-logo"
           />
         </div>
         
         {/* Headline */}
-        <h1 className="text-3xl md:text-4.5xl lg:text-7xl font-normal text-white tracking-tight leading-none">
+        <h1 className="text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter min-h-[60px] md:min-h-[84px] lg:min-h-[120px]">
           THE DAO IS{' '}
           <TextType
             text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING."]}

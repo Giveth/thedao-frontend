@@ -9,10 +9,10 @@ export default function TreasurySection() {
   const usdValue = ethPrice && totalBalanceEth ? totalBalanceEth * ethPrice : null
 
   return (
-    <section className="w-full px-4 py-16 md:py-24">
-      <div className="max-w-5xl mx-auto -mt-32 md:-mt-40 relative z-10">
+    <section className="w-full px-4 pt-16 md:pt-24">
+      <div className="max-w-10xl mx-auto -mt-32 md:-mt-40 relative z-10">
         <div
-          className="relative bg-dao-blue-light rounded-card px-[30px] py-[76px] md:px-16 md:py-[115px] overflow-hidden shadow-md"
+          className="relative bg-dao-blue-light rounded-card px-8 py-[76px] md:px-16 md:py-[115px] overflow-hidden shadow-md"
         >
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none" />

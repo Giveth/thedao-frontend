@@ -1,5 +1,5 @@
-/* Import Inter Tight font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap');
+/* Import Inter and Inter Tight fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Inter+Tight:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -52,6 +52,7 @@
   --color-dao-green: #5CB75A;
   
   /* Custom font family */
+  --font-inter: 'Inter', sans-serif;
   --font-inter-tight: 'Inter Tight', 'Inter', sans-serif;
   
   /* Custom font size (40px - no Tailwind equivalent) */
@@ -59,6 +60,9 @@
   
   /* Custom border radius */
   --radius-card: 16px;
+  
+  /* Custom max-width */
+  --max-width-10xl: 120rem;
 }
 
 :root {

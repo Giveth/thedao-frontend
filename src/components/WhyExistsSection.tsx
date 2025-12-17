@@ -1,7 +1,7 @@
 export default function WhyExistsSection() {
   return (
     <section className="w-full bg-dao-blue-dark">
-      <div className="px-8 md:px-24 lg:px-44 pt-26 pb-42">
+      <div className="max-w-10xl mx-auto px-8 md:px-24 lg:px-44 pt-26 pb-42">
         <div className="flex flex-col xl:flex-row items-start xl:items-center gap-8 xl:gap-[75px]">
           {/* Heading */}
           <h2
