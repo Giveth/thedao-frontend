@@ -38,7 +38,7 @@ function HeroSection() {
           href="https://giveth.typeform.com/to/XB4mTMou"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 h-10 inline-flex items-center justify-center"
+          className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 h-12 inline-flex items-center justify-center"
         >
           Get Involved
         </a>
