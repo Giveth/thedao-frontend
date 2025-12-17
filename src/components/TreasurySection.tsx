@@ -12,11 +12,7 @@ export default function TreasurySection() {
     <section className="w-full px-4 py-16 md:py-24">
       <div className="max-w-5xl mx-auto">
         <div
-          className="relative bg-[#2C5E86] rounded-[32px] px-[30px] py-[76px] md:px-16 md:py-[115px] overflow-hidden"
-          style={{
-            boxShadow:
-              '0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)',
-          }}
+          className="relative bg-dao-blue-light rounded-card px-[30px] py-[76px] md:px-16 md:py-[115px] overflow-hidden shadow-md"
         >
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none" />
@@ -27,15 +23,15 @@ export default function TreasurySection() {
               <img
                 src="/eth-logo.svg"
                 alt="ETH"
-                className="w-[38px] h-[60px] md:w-[76px] md:h-[121px]"
+                className="w-[38px] h-15 md:w-[76px] md:h-[121px]"
               />
               <span
-                className="text-[48px] md:text-[96px] font-semibold tracking-tight leading-tight"
+                className="text-5xl md:text-8xl font-semibold tracking-tight leading-tight"
                 title={isLoading || isError ? undefined : `${formattedEthOnly} ETH + ${formattedDaoTokens} DAO`}
               >
                 {isLoading ? <span className="text-white">...</span> : isError ? <span className="text-white">Error</span> : (
                   <>
-                    <span className="text-[#5CB75A]">{formattedBalance}</span>
+                    <span className="text-dao-green">{formattedBalance}</span>
                     <span className="text-white"> ETH</span>
                   </>
                 )}
@@ -43,16 +39,16 @@ export default function TreasurySection() {
             </div>
 
             {/* USD Value */}
-            <p className="text-[30px] md:text-[72px] font-normal leading-normal text-center">
+            <p className="text-3xl md:text-7xl font-normal leading-normal text-center">
               {isPriceLoading || isLoading ? <span className="text-white">...</span> : isPriceError || isError ? <span className="text-white">Error</span> : usdValue ? (
                 usdValue >= 1_000_000_000 ? (
                   <>
-                    <span className="text-[#5CB75A]">$<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
+                    <span className="text-dao-green">$<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
                     <span className="text-white"> Billion</span>
                   </>
                 ) : (
                   <>
-                    <span className="text-[#5CB75A]">$<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
+                    <span className="text-dao-green">$<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
                     <span className="text-white"> Million</span>
                   </>
                 )
@@ -60,7 +56,7 @@ export default function TreasurySection() {
             </p>
 
             {/* Tagline */}
-            <p className="text-white text-[24px] font-normal leading-none text-center">
+            <p className="text-white text-2xl font-normal leading-none text-center">
               For Ethereum Security.
             </p>
 

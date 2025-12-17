@@ -7,7 +7,7 @@ import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="min-h-screen w-full bg-[#28567A] relative overflow-x-hidden">
+    <div className="min-h-screen w-full bg-dao-blue relative overflow-x-hidden">
       {/* Background decoration - fixed to viewport */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-white/5 rounded-full blur-3xl" />
@@ -22,12 +22,12 @@ function App() {
             <img 
               src={daoLogo} 
               alt="The DAO Logo" 
-              className="w-[200px] h-[200px] md:w-[240px] md:h-[240px] drop-shadow-2xl"
+              className="size-[200px] md:size-60 drop-shadow-2xl"
             />
           </div>
           
           {/* Headline */}
-          <h1 className="text-[30px] md:text-[40px] font-normal text-white tracking-tight leading-none">
+          <h1 className="text-3xl md:text-4.5xl font-normal text-white tracking-tight leading-none">
             THE DAO IS{' '}
             <TextType
               text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING."]}

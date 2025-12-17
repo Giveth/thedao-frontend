@@ -46,11 +46,16 @@
   /* The DAO custom colors */
   --color-dao-red: #FF3B38;
   --color-dao-red-hover: #E63330;
-  --color-dao-blue-light: rgb(44, 94, 134);
-  --color-dao-blue-dark: rgb(31, 67, 95);
+  --color-dao-blue: #28567A;
+  --color-dao-blue-light: #2C5E86;
+  --color-dao-blue-dark: #1F435F;
+  --color-dao-green: #5CB75A;
   
   /* Custom font family */
   --font-inter-tight: 'Inter Tight', 'Inter', sans-serif;
+  
+  /* Custom font size (40px - no Tailwind equivalent) */
+  --font-size-4\.5xl: 2.5rem;
 }
 
 :root {
@@ -144,10 +149,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 20px rgba(255, 59, 56, 0.3));
+    filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-dao-red) 30%, transparent));
   }
   50% {
-    filter: drop-shadow(0 0 40px rgba(255, 59, 56, 0.5));
+    filter: drop-shadow(0 0 40px color-mix(in srgb, var(--color-dao-red) 50%, transparent));
   }
 }
 

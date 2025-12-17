@@ -49,7 +49,7 @@ export default function CuratorsSection() {
       
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-16 relative z-10">
         {/* Section Title */}
-        <h2 className="text-white text-[30px] md:text-[60px] font-light text-center leading-[1.15]">
+        <h2 className="text-white text-3xl md:text-6xl font-light text-center leading-tight">
           TheDAO Curators
         </h2>
 
@@ -87,7 +87,7 @@ function CuratorCard({
     <div className="flex flex-col items-center gap-4 w-[245px] group">
       <div className="relative overflow-hidden rounded-full">
         <img
-          className="w-[245px] h-[245px] object-cover transition-transform duration-300 group-hover:scale-105"
+          className="size-[245px] object-cover transition-transform duration-300 group-hover:scale-105"
           alt={name}
           src={image}
         />
@@ -95,10 +95,10 @@ function CuratorCard({
       </div>
 
       <div className="flex flex-col items-center gap-2 w-full text-center">
-        <h3 className="text-white text-[24px] font-bold leading-[1.33]">
+        <h3 className="text-white text-2xl font-bold leading-snug">
           {name}
         </h3>
-        <p className="text-white text-[24px] font-normal leading-none">
+        <p className="text-white text-2xl font-normal leading-none">
           {organization}
         </p>
       </div>

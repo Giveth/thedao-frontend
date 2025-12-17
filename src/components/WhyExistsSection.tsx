@@ -1,12 +1,11 @@
 export default function WhyExistsSection() {
   return (
-    <section className="w-full bg-[#1f435f]">
+    <section className="w-full bg-dao-blue-dark">
       <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-32 lg:py-40">
         <div className="flex flex-col items-start gap-10">
           {/* Heading */}
           <h2
-            className="text-[#5cb75a] text-4xl md:text-5xl lg:text-6xl font-light"
-            style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
+            className="text-dao-green text-4xl md:text-5xl lg:text-6xl font-light"
           >
             TheDAO's story continues
           </h2>
@@ -14,7 +13,6 @@ export default function WhyExistsSection() {
           {/* Content */}
           <div
             className="text-white text-xl md:text-2xl lg:text-3xl font-light leading-relaxed"
-            style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
           >
             <p>
               In 2016, TheDAO hard fork rescued DAO holders and TheDAO Curators addressed the edge cases, stipulating that unclaimed funds would support Ethereum security.
