@@ -41,12 +41,7 @@ const curatorsRow2 = [
 
 export default function CuratorsSection() {
   return (
-    <section className="w-full px-4 py-16 md:py-24 relative overflow-hidden">
-      {/* Background pattern */}
-      <div 
-        className="absolute inset-0 pointer-events-none bg-[url('/curators-background.svg')] bg-top md:bg-no-repeat bg-size-[200%_auto] md:bg-cover"
-      />
-      
+    <section className="w-full px-4 py-16 md:py-24 relative">
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-16 relative z-10">
         {/* Section Title */}
         <h2 className="text-white text-3xl md:text-6xl font-light text-center leading-tight">
@@ -84,10 +79,10 @@ function CuratorCard({
   organization: string
 }) {
   return (
-    <div className="flex flex-col items-center gap-4 w-[245px] group">
-      <div className="relative overflow-hidden rounded-full">
+    <div className="flex flex-col items-center gap-4 w-[245px] shrink-0 group">
+      <div className="relative overflow-hidden rounded-full aspect-square w-[245px]">
         <img
-          className="size-[245px] object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           alt={name}
           src={image}
         />

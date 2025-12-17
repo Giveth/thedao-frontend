@@ -10,7 +10,7 @@ export default function TreasurySection() {
 
   return (
     <section className="w-full px-4 py-16 md:py-24">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto -mt-32 md:-mt-40 relative z-10">
         <div
           className="relative bg-dao-blue-light rounded-card px-[30px] py-[76px] md:px-16 md:py-[115px] overflow-hidden shadow-md"
         >
@@ -26,12 +26,12 @@ export default function TreasurySection() {
                 className="w-[38px] h-15 md:w-[76px] md:h-[121px]"
               />
               <span
-                className="text-5xl md:text-8xl font-semibold tracking-tight leading-tight"
+                className="text-4xl md:text-8xl font-semibold tracking-tight leading-tight"
                 title={isLoading || isError ? undefined : `${formattedEthOnly} ETH + ${formattedDaoTokens} DAO`}
               >
                 {isLoading ? <span className="text-white">...</span> : isError ? <span className="text-white">Error</span> : (
                   <>
-                    <span className="text-dao-green">{formattedBalance}</span>
+                    <span className="text-dao-green tabular-nums inline-block min-w-[3ch]">{formattedBalance}</span>
                     <span className="text-white"> ETH</span>
                   </>
                 )}
@@ -39,7 +39,7 @@ export default function TreasurySection() {
             </div>
 
             {/* USD Value */}
-            <p className="text-3xl md:text-7xl font-normal leading-normal text-center">
+            <p className="text-2xl md:text-7xl font-normal leading-normal text-center">
               {isPriceLoading || isLoading ? <span className="text-white">...</span> : isPriceError || isError ? <span className="text-white">Error</span> : usdValue ? (
                 usdValue >= 1_000_000_000 ? (
                   <>
