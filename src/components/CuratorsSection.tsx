@@ -14,6 +14,11 @@ const curatorsRow1 = [
     name: "Jordi Baylina",
     organization: "ZisK",
   },
+  {
+    image: "/pcaversaccio.png",
+    name: "pcaversaccio",
+    organization: "SEAL 911",
+  },
 ]
 
 const curatorsRow2 = [
@@ -28,9 +33,9 @@ const curatorsRow2 = [
     organization: "Giveth",
   },
   {
-    image: "/pcaversaccio.png",
-    name: "pcaversaccio",
-    organization: "SEAL 911",
+    image: "/pol-lanski.png",
+    name: "Pol Lanski",
+    organization: "Dappnode",
   },
 ]
 
