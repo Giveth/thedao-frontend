@@ -39,34 +39,26 @@ export default function CuratorsSection() {
     <section className="w-full px-4 py-16 md:py-24 relative overflow-hidden">
       {/* Background pattern */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          backgroundImage: `url('/curators-background.svg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center',
-        }}
+        className="absolute inset-0 pointer-events-none bg-[url('/curators-background.svg')] bg-top md:bg-no-repeat bg-size-[200%_auto] md:bg-cover"
       />
       
-      <div className="max-w-5xl mx-auto flex flex-col items-center gap-12 relative z-10">
+      <div className="max-w-5xl mx-auto flex flex-col items-center gap-16 relative z-10">
         {/* Section Title */}
-        <h2
-          className="text-white text-4xl md:text-5xl lg:text-6xl font-light text-center"
-          style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
-        >
+        <h2 className="text-white text-[30px] md:text-[60px] font-light text-center leading-[1.15]">
           TheDAO Curators
         </h2>
 
         {/* Curators Grid */}
-        <div className="flex flex-col items-center gap-10 md:gap-16 w-full">
+        <div className="flex flex-col items-center gap-16 w-full">
           {/* Row 1 */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-12 lg:gap-16 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full">
             {curatorsRow1.map((curator, index) => (
               <CuratorCard key={index} {...curator} />
             ))}
           </div>
 
           {/* Row 2 */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-12 lg:gap-16 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full">
             {curatorsRow2.map((curator, index) => (
               <CuratorCard key={index} {...curator} />
             ))}
@@ -87,27 +79,21 @@ function CuratorCard({
   organization: string
 }) {
   return (
-    <div className="flex flex-col items-center gap-4 w-[200px] md:w-[220px] lg:w-[245px] group">
+    <div className="flex flex-col items-center gap-4 w-[245px] group">
       <div className="relative overflow-hidden rounded-full">
         <img
-          className="w-[200px] h-[200px] md:w-[220px] md:h-[220px] lg:w-[245px] lg:h-[245px] object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-[245px] h-[245px] object-cover transition-transform duration-300 group-hover:scale-105"
           alt={name}
           src={image}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      <div className="flex flex-col items-center gap-1 w-full text-center">
-        <h3
-          className="text-white text-xl md:text-2xl font-bold"
-          style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
-        >
+      <div className="flex flex-col items-center gap-2 w-full text-center">
+        <h3 className="text-white text-[24px] font-bold leading-[1.33]">
           {name}
         </h3>
-        <p
-          className="text-white/80 text-base md:text-lg font-normal"
-          style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
-        >
+        <p className="text-white text-[24px] font-normal leading-none">
           {organization}
         </p>
       </div>

@@ -2,36 +2,6 @@ import { useTreasuryBalance } from '../hooks/useTreasuryBalance'
 import { useEthPrice } from '../hooks/useEthPrice'
 import CountUp from './CountUp'
 
-const EthereumIcon = () => (
-  <svg
-    width="76"
-    height="121"
-    viewBox="0 0 256 417"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="xMidYMid"
-    className="drop-shadow-lg"
-  >
-    <path
-      fill="#fff"
-      d="M127.961 0l-2.795 9.5v275.668l2.795 2.79 127.962-75.638z"
-      opacity="0.6"
-    />
-    <path fill="#fff" d="M127.962 0L0 212.32l127.962 75.639V154.158z" />
-    <path
-      fill="#fff"
-      d="M127.961 312.187l-1.575 1.92v98.199l1.575 4.601L256 236.587z"
-      opacity="0.6"
-    />
-    <path fill="#fff" d="M127.962 416.905v-104.72L0 236.585z" />
-    <path
-      fill="#fff"
-      d="M127.961 287.958l127.96-75.637-127.96-58.162z"
-      opacity="0.2"
-    />
-    <path fill="#fff" d="M0 212.32l127.96 75.638v-133.8z" opacity="0.6" />
-  </svg>
-)
-
 export default function TreasurySection() {
   const { formattedBalance, formattedEthOnly, formattedDaoTokens, totalBalanceEth, isLoading, isError } = useTreasuryBalance()
   const { price: ethPrice, isLoading: isPriceLoading, isError: isPriceError } = useEthPrice()
@@ -42,56 +12,60 @@ export default function TreasurySection() {
     <section className="w-full px-4 py-16 md:py-24">
       <div className="max-w-5xl mx-auto">
         <div
-          className="relative bg-[#2C5E86] rounded-[32px] px-8 py-16 md:px-16 md:py-20 shadow-lg overflow-hidden"
+          className="relative bg-[#2C5E86] rounded-[32px] px-[30px] py-[76px] md:px-16 md:py-[115px] overflow-hidden"
           style={{
             boxShadow:
               '0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)',
           }}
         >
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col items-center gap-8">
+          <div className="relative z-10 flex flex-col items-center gap-4 md:gap-8">
             {/* ETH Amount with Icon */}
-            <div className="flex flex-row items-center justify-center gap-6 md:gap-8">
-              <EthereumIcon />
+            <div className="flex flex-row items-center justify-center gap-4 md:gap-8">
+              <img
+                src="/eth-logo.svg"
+                alt="ETH"
+                className="w-[38px] h-[60px] md:w-[76px] md:h-[121px]"
+              />
               <span
-                className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[96px] font-semibold tracking-tight"
-                style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
+                className="text-[48px] md:text-[96px] font-semibold tracking-tight leading-tight"
                 title={isLoading || isError ? undefined : `${formattedEthOnly} ETH + ${formattedDaoTokens} DAO`}
               >
-                {isLoading ? '...' : isError ? 'Error' : `${formattedBalance} ETH`}
+                {isLoading ? <span className="text-white">...</span> : isError ? <span className="text-white">Error</span> : (
+                  <>
+                    <span className="text-[#5CB75A]">{formattedBalance}</span>
+                    <span className="text-white"> ETH</span>
+                  </>
+                )}
               </span>
             </div>
 
             {/* USD Value */}
-            <p
-              className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal"
-              style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
-            >
-              {isPriceLoading || isLoading ? '...' : isPriceError || isError ? 'Error' : usdValue ? (
+            <p className="text-[30px] md:text-[72px] font-normal leading-normal text-center">
+              {isPriceLoading || isLoading ? <span className="text-white">...</span> : isPriceError || isError ? <span className="text-white">Error</span> : usdValue ? (
                 usdValue >= 1_000_000_000 ? (
                   <>
-                    $<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /> Billion
+                    <span className="text-[#5CB75A]">$<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
+                    <span className="text-white"> Billion</span>
                   </>
                 ) : (
                   <>
-                    $<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /> Million
+                    <span className="text-[#5CB75A]">$<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
+                    <span className="text-white"> Million</span>
                   </>
                 )
-              ) : '...'}
+              ) : <span className="text-white">...</span>}
             </p>
 
             {/* Tagline */}
-            <p
-              className="text-white text-xl md:text-2xl font-normal"
-              style={{ fontFamily: "'Inter Tight', Inter, sans-serif" }}
-            >
+            <p className="text-white text-[24px] font-normal leading-none text-center">
               For Ethereum Security.
             </p>
 
             {/* CTA Button */}
-            <button className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95">
+            <button className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 h-10">
               Learn More
             </button>
           </div>

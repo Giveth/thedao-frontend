@@ -7,7 +7,7 @@ import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="min-h-screen w-full bg-linear-to-br from-dao-blue-light to-dao-blue-dark relative overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#28567A] relative overflow-x-hidden">
       {/* Background decoration - fixed to viewport */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-white/5 rounded-full blur-3xl" />
@@ -16,18 +16,18 @@ function App() {
 
       {/* Hero Section */}
       <section className="min-h-screen w-full flex flex-col items-center justify-center relative">
-        <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center">
+        <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-12">
           {/* Logo */}
-          <div className="mb-8 animate-float animate-pulse-glow">
+          <div className="animate-float animate-pulse-glow">
             <img 
               src={daoLogo} 
               alt="The DAO Logo" 
-              className="w-40 h-40 md:w-60 md:h-60 drop-shadow-2xl"
+              className="w-[200px] h-[200px] md:w-[240px] md:h-[240px] drop-shadow-2xl"
             />
           </div>
           
           {/* Headline */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight mb-8">
+          <h1 className="text-[30px] md:text-[40px] font-normal text-white tracking-tight leading-none">
             THE DAO IS{' '}
             <TextType
               text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING."]}
@@ -47,7 +47,7 @@ function App() {
             href="https://giveth.typeform.com/to/XB4mTMou"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm md:text-base px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 inline-block"
+            className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 h-10 inline-flex items-center justify-center"
           >
             Get Involved
           </a>
