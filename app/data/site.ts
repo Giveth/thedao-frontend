@@ -4,7 +4,7 @@ export const SITE_PUNCHLINE = "The DAO is Back";
 export const SITE_DESCRIPTION = "TheDAO is back and is allocating over 75,000 ETH to strengthen Ethereum Security.";
 export const SITE_TWITTER_HANDLE = "@thedaofund";
 // export const SITE_OG_IMAGE = "https://thedao.fund/og-image.png";
-export const SITE_OG_IMAGE = "https://bafkreif5r4bpldynomcwf2wvbqhjtscwynmj76nou53xqik6hobqaiyzlq.ipfs.dweb.link/";
+export const SITE_OG_IMAGE = "https://bafkreidbputlxcvuz4jjpumktkrwcqz7pyhb4v6v5ptdwqzt6zsy57fera.ipfs.dweb.link/";
 
 // Organization Information
 export const ORGANIZATION_NAME = "TheDAO Security Fund";
