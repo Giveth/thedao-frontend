@@ -1,6 +1,6 @@
-import { useTreasuryBalance } from '../hooks/useTreasuryBalance'
-import { useEthPrice } from '../hooks/useEthPrice'
-import CountUp from './CountUp'
+import { useTreasuryBalance } from '~/hooks/useTreasuryBalance'
+import { useEthPrice } from '~/hooks/useEthPrice'
+import CountUp from '../text-animations/CountUp'
 
 export default function TreasurySection() {
   const { formattedBalance, formattedEthOnly, formattedDaoTokens, totalBalanceEth, isLoading, isError } = useTreasuryBalance()

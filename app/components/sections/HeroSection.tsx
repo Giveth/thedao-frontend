@@ -1,5 +1,5 @@
 import daoLogo from '/dao-logo.svg'
-import TextType from './TextType'
+import TextType from '../text-animations/TextType'
 
 function HeroSection() {
   const redColor = 'var(--color-dao-red)';
@@ -48,3 +48,4 @@ function HeroSection() {
 }
 
 export default HeroSection
+

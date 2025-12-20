@@ -1,4 +1,4 @@
-import FadeContent from './FadeContent';
+import FadeContent from '../text-animations/FadeContent';
 
 export default function WhyExistsSection() {
   return (
