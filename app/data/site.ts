@@ -1,6 +1,6 @@
 export const SITE_NAME = "TheDAO Security Fund";
 export const SITE_URL = "https://thedao.fund";
-export const SITE_PUNCHLINE = "TheDAO is back";
+export const SITE_PUNCHLINE = "TheDAO is Back";
 export const SITE_DESCRIPTION = "TheDAO is back and is allocating over 75,000 ETH to strengthen Ethereum security. Bullish.";
 export const SITE_TWITTER_HANDLE = "@thedaofund";
 // export const SITE_OG_IMAGE = "https://thedao.fund/og-image.png";
