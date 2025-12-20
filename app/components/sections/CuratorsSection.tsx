@@ -1,21 +1,21 @@
 const curatorsRow1 = [
   {
-    image: "/vitalik-buterin.png",
+    image: "/vitalik-buterin.webp",
     name: "Vitalik Buterin",
     organization: "Ethereum Foundation",
   },
   {
-    image: "/taylor-monahan.png",
+    image: "/taylor-monahan.webp",
     name: "Taylor Monahan",
     organization: "Metamask",
   },
   {
-    image: "/jordi-baylina.png",
+    image: "/jordi-baylina.webp",
     name: "Jordi Baylina",
     organization: "ZisK",
   },
   {
-    image: "/pcaversaccio.png",
+    image: "/pcaversaccio.webp",
     name: "pcaversaccio",
     organization: "SEAL 911",
   },
@@ -23,17 +23,17 @@ const curatorsRow1 = [
 
 const curatorsRow2 = [
   {
-    image: "/alex-van-de-sande.png",
+    image: "/alex-van-de-sande.webp",
     name: "Alex Van de Sande",
     organization: "ENS",
   },
   {
-    image: "/griff-green.png",
+    image: "/griff-green.webp",
     name: "Griff Green",
     organization: "Giveth",
   },
   {
-    image: "/pol-lanski.png",
+    image: "/pol-lanski.webp",
     name: "Pol Lanski",
     organization: "Dappnode",
   },
