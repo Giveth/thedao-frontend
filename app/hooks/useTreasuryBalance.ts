@@ -1,4 +1,5 @@
-import { useBalance, useReadContracts } from 'wagmi'
+import { useReadContracts } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
 import { formatEther } from 'viem'
 
 const TREASURY_ADDRESSES = [
@@ -9,6 +10,18 @@ const TREASURY_ADDRESSES = [
 ] as const
 
 const THE_DAO_TOKEN = '0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413' as const
+const MULTICALL3_ADDRESS = mainnet.contracts.multicall3.address
+
+// Multicall3 getEthBalance ABI
+const multicall3Abi = [
+  {
+    name: 'getEthBalance',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'addr', type: 'address' }],
+    outputs: [{ name: 'balance', type: 'uint256' }],
+  },
+] as const
 
 // ERC20 balanceOf ABI
 const erc20BalanceOfAbi = [
@@ -27,49 +40,57 @@ const erc20BalanceOfAbi = [
 const DAO_TOKEN_TO_WEI_MULTIPLIER = 1n
 
 export function useTreasuryBalance() {
-  // ETH balances
-  const slowMultisig = useBalance({ address: TREASURY_ADDRESSES[0] })
-  const fastMultisig = useBalance({ address: TREASURY_ADDRESSES[1] })
-  const oldMultisig = useBalance({ address: TREASURY_ADDRESSES[2] })
-  const extraBalance = useBalance({ address: TREASURY_ADDRESSES[3] })
-
-  // DAO token balances (batched multicall)
-  const daoTokenBalances = useReadContracts({
-    contracts: TREASURY_ADDRESSES.map((address) => ({
-      address: THE_DAO_TOKEN,
-      abi: erc20BalanceOfAbi,
-      functionName: 'balanceOf',
-      args: [address],
-    })),
+  // Single multicall for all ETH balances and DAO token balances
+  const results = useReadContracts({
+    contracts: [
+      // ETH balances via Multicall3.getEthBalance (indices 0-3)
+      ...TREASURY_ADDRESSES.map((address) => ({
+        address: MULTICALL3_ADDRESS,
+        abi: multicall3Abi,
+        functionName: 'getEthBalance' as const,
+        args: [address] as const,
+      })),
+      // DAO token balances (indices 4-7)
+      ...TREASURY_ADDRESSES.map((address) => ({
+        address: THE_DAO_TOKEN,
+        abi: erc20BalanceOfAbi,
+        functionName: 'balanceOf' as const,
+        args: [address] as const,
+      })),
+    ],
   })
 
-  const isLoading =
-    slowMultisig.isLoading ||
-    fastMultisig.isLoading ||
-    oldMultisig.isLoading ||
-    extraBalance.isLoading ||
-    daoTokenBalances.isLoading
+  const { isLoading, isError, data } = results
 
-  const isError =
-    slowMultisig.isError ||
-    fastMultisig.isError ||
-    oldMultisig.isError ||
-    extraBalance.isError ||
-    daoTokenBalances.isError
+  // Extract ETH balances (first 4 results)
+  const ethBalances = {
+    slowMultisig: data?.[0]?.result as bigint | undefined,
+    fastMultisig: data?.[1]?.result as bigint | undefined,
+    oldMultisig: data?.[2]?.result as bigint | undefined,
+    extraBalance: data?.[3]?.result as bigint | undefined,
+  }
+
+  // Extract DAO token balances (last 4 results)
+  const daoTokenBalancesData = {
+    slowMultisig: data?.[4]?.result as bigint | undefined,
+    fastMultisig: data?.[5]?.result as bigint | undefined,
+    oldMultisig: data?.[6]?.result as bigint | undefined,
+    extraBalance: data?.[7]?.result as bigint | undefined,
+  }
 
   // Total ETH balance
   const totalEthBalanceWei =
-    (slowMultisig.data?.value ?? 0n) +
-    (fastMultisig.data?.value ?? 0n) +
-    (oldMultisig.data?.value ?? 0n) +
-    (extraBalance.data?.value ?? 0n)
+    (ethBalances.slowMultisig ?? 0n) +
+    (ethBalances.fastMultisig ?? 0n) +
+    (ethBalances.oldMultisig ?? 0n) +
+    (ethBalances.extraBalance ?? 0n)
 
   // Total DAO token balance (in token smallest units, 16 decimals)
   const totalDaoTokens =
-    daoTokenBalances.data?.reduce(
-      (sum, result) => sum + ((result.result as bigint) ?? 0n),
-      0n
-    ) ?? 0n
+    (daoTokenBalancesData.slowMultisig ?? 0n) +
+    (daoTokenBalancesData.fastMultisig ?? 0n) +
+    (daoTokenBalancesData.oldMultisig ?? 0n) +
+    (daoTokenBalancesData.extraBalance ?? 0n)
 
   // Convert DAO tokens to ETH equivalent (each token = 0.1 ETH)
   const daoTokenValueWei = totalDaoTokens * DAO_TOKEN_TO_WEI_MULTIPLIER
@@ -100,16 +121,13 @@ export function useTreasuryBalance() {
     isLoading,
     isError,
     balances: {
-      slowMultisig: slowMultisig.data,
-      fastMultisig: fastMultisig.data,
-      oldMultisig: oldMultisig.data,
-      extraBalance: extraBalance.data,
+      slowMultisig: ethBalances.slowMultisig,
+      fastMultisig: ethBalances.fastMultisig,
+      oldMultisig: ethBalances.oldMultisig,
+      extraBalance: ethBalances.extraBalance,
     },
     daoTokenBalances: {
-      slowMultisig: daoTokenBalances.data?.[0]?.result as bigint | undefined,
-      fastMultisig: daoTokenBalances.data?.[1]?.result as bigint | undefined,
-      oldMultisig: daoTokenBalances.data?.[2]?.result as bigint | undefined,
-      extraBalance: daoTokenBalances.data?.[3]?.result as bigint | undefined,
+      ...daoTokenBalancesData,
       total: totalDaoTokens,
     },
   }
