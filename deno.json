@@ -1,0 +1,19 @@
+{
+  "unstable": ["kv"],
+  "nodeModulesDir": "auto",
+  "tasks": {
+    "dev": "deno run -A npm:@react-router/dev dev",
+    "build": "deno run -A npm:@react-router/dev build",
+    "start": "deno run --allow-net --allow-read --allow-env server.ts",
+    "typecheck": "deno run -A npm:@react-router/dev typegen && deno run -A npm:typescript/tsc",
+    "lint": "deno lint"
+  },
+  "imports": {
+    "@std/http": "jsr:@std/http@^1.0.0"
+  },
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "deno.ns"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
+}

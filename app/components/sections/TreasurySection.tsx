@@ -61,7 +61,7 @@ export default function TreasurySection() {
             </p>
 
             {/* CTA Button */}
-            <button className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 h-12">
+            <button type="button" className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 h-12">
               Learn More
             </button>
           </div>

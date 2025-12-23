@@ -26,9 +26,9 @@ function HeroSection() {
             typingSpeed={190}
             deletingSpeed={50}
             pauseDuration={1500}
-            showCursor={true}
+            showCursor
             cursorCharacter="|"
-            loop={true}
+            loop
             textColors={[redColor, greenColor, redColor, greenColor]}
           />
         </h1>

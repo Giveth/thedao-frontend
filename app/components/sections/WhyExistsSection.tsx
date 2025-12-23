@@ -41,7 +41,7 @@ export default function WhyExistsSection() {
 
           {/* CTA Button */}
           <FadeContent blur duration={400} delay={600}>
-            <button className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 h-12 rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 w-fit">
+            <button type="button" className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 h-12 rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 w-fit">
               Learn More
             </button>
           </FadeContent>
