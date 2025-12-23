@@ -107,8 +107,8 @@ export function useTreasuryBalance() {
   const { data, isLoading, isError } = useQuery<TreasuryData>({
     queryKey: ['treasuryBalance'],
     queryFn: fetchTreasuryBalance,
-    staleTime: 2000, // 2 seconds to match server cache
-    refetchInterval: 5000, // Optional: refetch every 5 seconds
+    staleTime: 60 * 1000, // 1 minute
+    refetchInterval: 60 * 1000, // Refetch every minute
   })
 
   return {
