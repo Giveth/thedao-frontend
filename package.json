@@ -6,6 +6,12 @@
   "engines": {
     "deno": ">=2.0.0"
   },
+  "scripts": {
+    "dev": "deno task dev",
+    "build": "deno task build",
+    "start": "deno task start",
+    "typecheck": "deno task typecheck"
+  },
   "dependencies": {
     "@react-router/fs-routes": "^7.9.5",
     "@react-router/node": "^7.11.0",
