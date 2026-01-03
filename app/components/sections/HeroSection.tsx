@@ -21,7 +21,7 @@ function HeroSection() {
         <h1 className="text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter min-h-[60px] md:min-h-[84px] lg:min-h-[120px]">
           THE DAO IS{' '}
           <TextType
-            text={["BACK.", "REVOLUTIONARY.", "SECURITY.", "REWARDING."]}
+            text={["BACK.", "EVOLUTIONARY.", "SECURITY.", "REWARDING."]}
             as="span"
             typingSpeed={190}
             deletingSpeed={50}
