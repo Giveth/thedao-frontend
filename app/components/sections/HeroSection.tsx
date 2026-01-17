@@ -19,7 +19,11 @@ function HeroSection() {
         
         {/* Headline */}
         <h1 className="text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter min-h-[60px] md:min-h-[84px] lg:min-h-[120px]">
-          THE DAO IS{' '}
+          THE DAO IS
+          <br className="sm:hidden" />
+          <span className="hidden sm:inline">{' '}</span>
+          {/* Invisible cursor balancer - offsets the visible cursor's width on extra small screens for proper centering */}
+          <span className="inline-block mr-1 opacity-0 sm:hidden" aria-hidden="true">|</span>
           <TextType
             text={["BACK.", "EVOLUTIONARY.", "SECURITY.", "REWARDING."]}
             as="span"
