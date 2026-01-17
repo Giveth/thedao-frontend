@@ -25,7 +25,7 @@ export default function WhyExistsSection() {
               </FadeContent>
               <FadeContent blur duration={400} delay={200}>
                 <p>
-                  Nearly a decade later, the unclaimed ETH{' '}
+                  A decade later, the unclaimed ETH{' '}
                   has sat idle and significantly appreciated.
                 </p>
               </FadeContent>
@@ -33,7 +33,7 @@ export default function WhyExistsSection() {
                 <p>
                   TheDAO Security Fund enables the community{' '}
                   to reallocate these funds toward the projects{' '}
-                  and people that improve Ethereum security.
+                  and people that strengthen Ethereum security.
                 </p>
               </FadeContent>
             </div>
