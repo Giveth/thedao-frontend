@@ -51,14 +51,14 @@ export default function CuratorsSection() {
         {/* Curators Grid */}
         <div className="flex flex-col items-center gap-16 w-full">
           {/* Row 1 */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full">
             {curatorsRow1.map((curator, index) => (
               <CuratorCard key={index} {...curator} />
             ))}
           </div>
 
           {/* Row 2 */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full">
             {curatorsRow2.map((curator, index) => (
               <CuratorCard key={index} {...curator} />
             ))}
@@ -79,8 +79,8 @@ function CuratorCard({
   organization: string
 }) {
   return (
-    <div className="flex flex-col items-center gap-4 w-[245px] shrink-0 group">
-      <div className="relative overflow-hidden rounded-full aspect-square w-[245px]">
+    <div className="flex flex-col items-center gap-4 w-[180px] lg:w-[245px] group">
+      <div className="relative overflow-hidden rounded-full aspect-square w-full">
         <img
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           alt={name}
@@ -90,10 +90,10 @@ function CuratorCard({
       </div>
 
       <div className="flex flex-col items-center gap-2 w-full text-center">
-        <h3 className="text-white text-2xl font-bold leading-snug">
+        <h3 className="text-white text-lg lg:text-2xl font-bold leading-snug whitespace-nowrap">
           {name}
         </h3>
-        <p className="text-white text-2xl font-normal leading-none">
+        <p className="text-white text-lg lg:text-2xl font-normal leading-none whitespace-nowrap">
           {organization}
         </p>
       </div>

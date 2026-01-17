@@ -6,19 +6,19 @@ function HeroSection() {
   const greenColor = 'var(--color-dao-green)';
 
   return (
-    <section className="min-h-screen w-full flex flex-col items-center justify-center relative bg-linear-to-br from-dao-blue to-dao-blue-dark">
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-12 max-w-10xl mx-auto w-full">
+    <section className="min-h-dvh w-full flex flex-col items-center justify-center relative bg-linear-to-br from-dao-blue to-dao-blue-dark py-8">
+      <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-6 sm:gap-8 md:gap-12 max-w-10xl mx-auto w-full">
         {/* Logo */}
         <div>
           <img 
             src={daoLogo} 
             alt="The DAO Logo" 
-            className="size-[240px] md:size-60 drop-shadow-logo"
+            className="size-[240px] md:size-60 [@media(max-height:500px)]:size-[140px] drop-shadow-logo"
           />
         </div>
         
         {/* Headline */}
-        <h1 className="text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter min-h-[60px] md:min-h-[84px] lg:min-h-[120px]">
+        <h1 className="text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter">
           THE DAO IS
           <br className="sm:hidden" />
           <span className="hidden sm:inline">{' '}</span>
@@ -42,7 +42,7 @@ function HeroSection() {
           href="https://giveth.typeform.com/to/XB4mTMou"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 h-12 inline-flex items-center justify-center"
+          className="bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 h-10 inline-flex items-center justify-center"
         >
           Get Involved
         </a>
