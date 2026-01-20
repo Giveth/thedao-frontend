@@ -27,3 +27,5 @@ build
 *.sln
 *.sw?
 .env
+.envrc
+.denoflare

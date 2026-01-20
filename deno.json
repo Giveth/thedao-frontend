@@ -6,7 +6,9 @@
     "build": "deno run -A npm:@react-router/dev build",
     "start": "deno run --allow-net --allow-read --allow-env server.ts",
     "typecheck": "deno run -A npm:@react-router/dev typegen && deno run -A npm:typescript/tsc",
-    "lint": "deno lint"
+    "lint": "deno lint",
+    "cf:dev": "npx wrangler pages dev",
+    "cf:deploy": "npx wrangler pages deploy"
   },
   "imports": {
     "@std/http": "jsr:@std/http@^1.0.0"
