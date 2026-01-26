@@ -3,14 +3,16 @@ import { formatEther } from 'viem'
 
 interface ApiResponse {
   balances: {
-    slowMultisig: string
-    fastMultisig: string
+    ogCuratorsMultisig: string
+    operationalMultisig: string
+    stakingMultisig: string
     oldMultisig: string
     extraBalance: string
   }
   daoTokenBalances: {
-    slowMultisig: string
-    fastMultisig: string
+    ogCuratorsMultisig: string
+    operationalMultisig: string
+    stakingMultisig: string
     oldMultisig: string
     extraBalance: string
   }
@@ -23,14 +25,16 @@ export interface TreasuryData {
   formattedEthOnly: string
   formattedDaoTokens: string
   balances: {
-    slowMultisig: string
-    fastMultisig: string
+    ogCuratorsMultisig: string
+    operationalMultisig: string
+    stakingMultisig: string
     oldMultisig: string
     extraBalance: string
   }
   daoTokenBalances: {
-    slowMultisig: string
-    fastMultisig: string
+    ogCuratorsMultisig: string
+    operationalMultisig: string
+    stakingMultisig: string
     oldMultisig: string
     extraBalance: string
     total: string
@@ -48,28 +52,32 @@ function formatNumber(n: number): string {
 
 function calculateTreasuryData(response: ApiResponse): TreasuryData {
   const ethBalances = {
-    slowMultisig: BigInt(response.balances.slowMultisig),
-    fastMultisig: BigInt(response.balances.fastMultisig),
+    ogCuratorsMultisig: BigInt(response.balances.ogCuratorsMultisig),
+    operationalMultisig: BigInt(response.balances.operationalMultisig),
+    stakingMultisig: BigInt(response.balances.stakingMultisig),
     oldMultisig: BigInt(response.balances.oldMultisig),
     extraBalance: BigInt(response.balances.extraBalance),
   }
 
   const daoTokenBalancesData = {
-    slowMultisig: BigInt(response.daoTokenBalances.slowMultisig),
-    fastMultisig: BigInt(response.daoTokenBalances.fastMultisig),
+    ogCuratorsMultisig: BigInt(response.daoTokenBalances.ogCuratorsMultisig),
+    operationalMultisig: BigInt(response.daoTokenBalances.operationalMultisig),
+    stakingMultisig: BigInt(response.daoTokenBalances.stakingMultisig),
     oldMultisig: BigInt(response.daoTokenBalances.oldMultisig),
     extraBalance: BigInt(response.daoTokenBalances.extraBalance),
   }
 
   const totalEthBalanceWei =
-    ethBalances.slowMultisig +
-    ethBalances.fastMultisig +
+    ethBalances.ogCuratorsMultisig +
+    ethBalances.operationalMultisig +
+    ethBalances.stakingMultisig +
     ethBalances.oldMultisig +
     ethBalances.extraBalance
 
   const totalDaoTokens =
-    daoTokenBalancesData.slowMultisig +
-    daoTokenBalancesData.fastMultisig +
+    daoTokenBalancesData.ogCuratorsMultisig +
+    daoTokenBalancesData.operationalMultisig +
+    daoTokenBalancesData.stakingMultisig +
     daoTokenBalancesData.oldMultisig +
     daoTokenBalancesData.extraBalance
 
