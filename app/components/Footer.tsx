@@ -9,13 +9,13 @@ export default function Footer() {
         </p>
         <div className="flex items-center gap-4">
           <a 
-            href={SOCIAL_LINKS.medium} 
+            href={SOCIAL_LINKS.paragraph} 
             target="_blank" 
             rel="noopener noreferrer"
             className="hover:opacity-80 transition-opacity"
-            title="Medium"
+            title="Paragraph"
           >
-            <img src="/medium-icon.svg" alt="Medium" className="w-10 h-10 shadow-sm" />
+            <img src="/paragraph-icon.svg" alt="Paragraph" className="w-10 h-10 shadow-sm" />
           </a>
           <a 
             href={SOCIAL_LINKS.twitter} 

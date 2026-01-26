@@ -16,6 +16,6 @@ export const SITE_FOUNDED = "2025";
 // Social Links
 export const SOCIAL_LINKS = {
   twitter: "https://x.com/thedaofund",
-  medium: "https://medium.com/curator-multisig-phf-official-channel",
+  paragraph: "https://paragraph.xyz/@thedaofund",
   farcaster: "https://warpcast.com/thedaofund",
 };
