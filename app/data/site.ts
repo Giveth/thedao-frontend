@@ -16,6 +16,6 @@ export const SITE_FOUNDED = "2025";
 // Social Links
 export const SOCIAL_LINKS = {
   twitter: "https://x.com/thedaofund",
-  paragraph: "https://paragraph.xyz/@thedaofund",
+  paragraph: "https://paragraph.xyz/@thedao.fund",
   farcaster: "https://warpcast.com/thedaofund",
 };
