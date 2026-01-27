@@ -8,7 +8,7 @@
     "typecheck": "deno run -A npm:@react-router/dev typegen && deno run -A npm:typescript/tsc",
     "lint": "deno lint",
     "cf:dev": "npx wrangler pages dev",
-    "cf:deploy": "npx wrangler pages deploy"
+    "cf:deploy": "npx wrangler pages deploy --branch=master"
   },
   "imports": {
     "@std/http": "jsr:@std/http@^1.0.0"
