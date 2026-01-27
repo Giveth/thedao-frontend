@@ -1,0 +1,14 @@
+# HTML files - no cache (always fetch latest)
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Hashed assets (JS/CSS) - cache for 1 year (filename changes on updates)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Other static files - cache for 1 day
+/*
+  Cache-Control: public, max-age=86400
