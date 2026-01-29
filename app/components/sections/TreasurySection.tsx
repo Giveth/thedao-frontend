@@ -61,9 +61,9 @@ export default function TreasurySection() {
             </p>
 
             {/* CTA Button */}
-            <button type="button" className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 h-12">
+            <a href="https://paragraph.com/@thedao.fund/thedao-security-fund-activating-75000-eth-for-ethereum-security" target="_blank" rel="noopener noreferrer" className="mt-4 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 h-12 inline-flex items-center">
               Learn More
-            </button>
+            </a>
           </div>
         </div>
       </div>
