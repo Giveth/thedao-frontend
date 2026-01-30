@@ -4,29 +4,46 @@ interface CoinGeckoResponse {
   ethereum: {
     usd: number
   }
+  dai: {
+    usd: number
+  }
 }
 
-async function fetchEthPrice(): Promise<number> {
+interface PriceData {
+  ethPrice: number
+  daiPrice: number
+  daiToEthRate: number
+}
+
+async function fetchPrices(): Promise<PriceData> {
   const response = await fetch(
-    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'
+    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,dai&vs_currencies=usd'
   )
   if (!response.ok) {
-    throw new Error('Failed to fetch ETH price')
+    throw new Error('Failed to fetch prices')
   }
   const data: CoinGeckoResponse = await response.json()
-  return data.ethereum.usd
+  const ethPrice = data.ethereum.usd
+  const daiPrice = data.dai.usd
+  return {
+    ethPrice,
+    daiPrice,
+    daiToEthRate: daiPrice / ethPrice,
+  }
 }
 
 export function useEthPrice() {
-  const { data: price, isLoading, isError } = useQuery({
-    queryKey: ['ethPrice'],
-    queryFn: fetchEthPrice,
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['prices'],
+    queryFn: fetchPrices,
     staleTime: 60 * 1000, // 1 minute
     refetchInterval: 60 * 1000, // Refetch every minute
   })
 
   return {
-    price,
+    price: data?.ethPrice,
+    daiPrice: data?.daiPrice,
+    daiToEthRate: data?.daiToEthRate,
     isLoading,
     isError,
   }

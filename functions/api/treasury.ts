@@ -5,32 +5,44 @@ interface Env {
   ETH_RPC_URL: string;
 }
 
-interface TreasuryResponse {
-  balances: {
-    ogCuratorsMultisig: string;
-    operationalMultisig: string;
-    stakingMultisig: string;
-    oldMultisig: string;
-    extraBalance: string;
-  };
-  daoTokenBalances: {
-    ogCuratorsMultisig: string;
-    operationalMultisig: string;
-    stakingMultisig: string;
-    oldMultisig: string;
-    extraBalance: string;
-  };
+interface EthBalances {
+  ogCuratorsMultisig: string;
+  operationalMultisig: string;
+  stakingMultisig: string;
+  extraBalance: string;
 }
 
-const TREASURY_ADDRESSES: readonly Address[] = [
+interface Erc20Balances {
+  ogCuratorsMultisig: string;
+  operationalMultisig: string;
+  stakingMultisig: string;
+}
+
+interface TreasuryResponse {
+  balances: EthBalances;
+  daoTokenBalances: Erc20Balances;
+  wethBalances: Erc20Balances;
+  daiBalances: Erc20Balances;
+}
+
+// Addresses for ETH balance queries (extraBalance has unrecoverable ERC20s)
+const ETH_TREASURY_ADDRESSES: readonly Address[] = [
   "0xa0526349A100618Ee4f981B016a51c53fF0DEC07", // ogCuratorsMultisig
   "0x5256d6d94eD14667fa1661a99F5B142B1e051B8e", // operationalMultisig
   "0x52016A661a6cd35d88d30297E8840998ac3Db756", // stakingMultisig
-  "0xda4a4626d3e16e094de3225a751aab7128e96526", // oldMultisig
   "0x755cdba6ae4f479f7164792b318b2a06c759833b", // extraBalance
 ] as const;
 
+// Addresses for ERC20 balance queries (excludes extraBalance - tokens are unrecoverable)
+const ERC20_TREASURY_ADDRESSES: readonly Address[] = [
+  "0xa0526349A100618Ee4f981B016a51c53fF0DEC07", // ogCuratorsMultisig
+  "0x5256d6d94eD14667fa1661a99F5B142B1e051B8e", // operationalMultisig
+  "0x52016A661a6cd35d88d30297E8840998ac3Db756", // stakingMultisig
+] as const;
+
 const THE_DAO_TOKEN: Address = "0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413";
+const WETH_TOKEN: Address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+const DAI_TOKEN: Address = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const MULTICALL3_ADDRESS: Address = "0xca11bde05977b3631167028862be2a173976ca11";
 
 const multicall3Abi = parseAbi([
@@ -47,9 +59,9 @@ async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResponse> {
     transport: http(ethRpcUrl),
   });
 
-  const [ethResults, tokenResults] = await Promise.all([
+  const [ethResults, daoTokenResults, wethResults, daiResults] = await Promise.all([
     client.multicall({
-      contracts: TREASURY_ADDRESSES.map((address) => ({
+      contracts: ETH_TREASURY_ADDRESSES.map((address) => ({
         address: MULTICALL3_ADDRESS,
         abi: multicall3Abi,
         functionName: "getEthBalance",
@@ -57,8 +69,24 @@ async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResponse> {
       })),
     }),
     client.multicall({
-      contracts: TREASURY_ADDRESSES.map((address) => ({
+      contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
         address: THE_DAO_TOKEN,
+        abi: erc20BalanceOfAbi,
+        functionName: "balanceOf",
+        args: [address],
+      })),
+    }),
+    client.multicall({
+      contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
+        address: WETH_TOKEN,
+        abi: erc20BalanceOfAbi,
+        functionName: "balanceOf",
+        args: [address],
+      })),
+    }),
+    client.multicall({
+      contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
+        address: DAI_TOKEN,
         abi: erc20BalanceOfAbi,
         functionName: "balanceOf",
         args: [address],
@@ -66,21 +94,24 @@ async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResponse> {
     }),
   ]);
 
+  const toEthBalances = (results: typeof ethResults): EthBalances => ({
+    ogCuratorsMultisig: ((results[0].result as bigint) ?? 0n).toString(),
+    operationalMultisig: ((results[1].result as bigint) ?? 0n).toString(),
+    stakingMultisig: ((results[2].result as bigint) ?? 0n).toString(),
+    extraBalance: ((results[3].result as bigint) ?? 0n).toString(),
+  });
+
+  const toErc20Balances = (results: typeof daoTokenResults): Erc20Balances => ({
+    ogCuratorsMultisig: ((results[0].result as bigint) ?? 0n).toString(),
+    operationalMultisig: ((results[1].result as bigint) ?? 0n).toString(),
+    stakingMultisig: ((results[2].result as bigint) ?? 0n).toString(),
+  });
+
   return {
-    balances: {
-      ogCuratorsMultisig: ((ethResults[0].result as bigint) ?? 0n).toString(),
-      operationalMultisig: ((ethResults[1].result as bigint) ?? 0n).toString(),
-      stakingMultisig: ((ethResults[2].result as bigint) ?? 0n).toString(),
-      oldMultisig: ((ethResults[3].result as bigint) ?? 0n).toString(),
-      extraBalance: ((ethResults[4].result as bigint) ?? 0n).toString(),
-    },
-    daoTokenBalances: {
-      ogCuratorsMultisig: ((tokenResults[0].result as bigint) ?? 0n).toString(),
-      operationalMultisig: ((tokenResults[1].result as bigint) ?? 0n).toString(),
-      stakingMultisig: ((tokenResults[2].result as bigint) ?? 0n).toString(),
-      oldMultisig: ((tokenResults[3].result as bigint) ?? 0n).toString(),
-      extraBalance: ((tokenResults[4].result as bigint) ?? 0n).toString(),
-    },
+    balances: toEthBalances(ethResults),
+    daoTokenBalances: toErc20Balances(daoTokenResults),
+    wethBalances: toErc20Balances(wethResults),
+    daiBalances: toErc20Balances(daiResults),
   };
 }
 
