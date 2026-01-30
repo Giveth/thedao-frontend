@@ -38,7 +38,12 @@ export function generateMeta(options: MetaOptions = {}) {
     sizes?: string;
   }> = [
     // Favicons and App Icons
-    { tagName: "link", rel: "icon", type: "image/svg+xml", href: "/dao-logo.svg" },
+    { tagName: "link", rel: "icon", type: "image/svg+xml", href: "/favicon.svg", sizes: "any" },
+    { tagName: "link", rel: "icon", href: "/favicon.ico", sizes: "any" },
+    { tagName: "link", rel: "icon", type: "image/png", href: "/favicon-16x16.png", sizes: "16x16" },
+    { tagName: "link", rel: "icon", type: "image/png", href: "/favicon-32x32.png", sizes: "32x32" },
+    { tagName: "link", rel: "icon", type: "image/png", href: "/favicon-192x192.png", sizes: "192x192" },
+    { tagName: "link", rel: "icon", type: "image/png", href: "/favicon-512x512.png", sizes: "512x512" },
 
     // Canonical URL
     { tagName: "link", rel: "canonical", href: fullUrl },
