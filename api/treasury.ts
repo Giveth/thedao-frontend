@@ -142,8 +142,22 @@ async function getTreasuryData(): Promise<TreasuryResponse> {
     return cached.value.data;
   }
   const data = await fetchFromRpc();
-  await kv.set(CACHE_KEY, { data, timestamp: Date.now() });
-  return data;
+  
+  // Add 69,420 ETH back to stakingMultisig to account for the ETH moved out for staking
+  const stakedEth = "69420000000000000000000"; // 69,420 ETH in wei
+  const currentStakingBalance = BigInt(data.balances.stakingMultisig);
+  const adjustedStakingBalance = currentStakingBalance + BigInt(stakedEth);
+  
+  const adjustedData: TreasuryResponse = {
+    ...data,
+    balances: {
+      ...data.balances,
+      stakingMultisig: adjustedStakingBalance.toString()
+    }
+  };
+  
+  await kv.set(CACHE_KEY, { data: adjustedData, timestamp: Date.now() });
+  return adjustedData;
 }
 
 // =============================================================================

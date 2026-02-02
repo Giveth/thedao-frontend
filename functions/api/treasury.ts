@@ -118,7 +118,21 @@ async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResponse> {
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const data = await fetchTreasuryData(context.env.ETH_RPC_URL);
-    return new Response(JSON.stringify(data), {
+    
+    // Add 69,420 ETH back to stakingMultisig to account for the ETH moved out for staking
+    const stakedEth = "69420000000000000000000"; // 69,420 ETH in wei
+    const currentStakingBalance = BigInt(data.balances.stakingMultisig);
+    const adjustedStakingBalance = currentStakingBalance + BigInt(stakedEth);
+    
+    const adjustedData: TreasuryResponse = {
+      ...data,
+      balances: {
+        ...data.balances,
+        stakingMultisig: adjustedStakingBalance.toString()
+      }
+    };
+    
+    return new Response(JSON.stringify(adjustedData), {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
