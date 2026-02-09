@@ -1,10 +1,8 @@
-import {
-  fetchTreasuryData,
-  adjustStakingBalance,
-} from "../../lib/treasury";
+import { fetchTreasuryData } from "../../lib/treasury";
 
 interface Env {
   ETH_RPC_URL: string;
+  BEACON_API_URL: string;
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
@@ -18,10 +16,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   if (cached) return cached;
 
   try {
-    const data = await fetchTreasuryData(context.env.ETH_RPC_URL);
-    const adjustedData = adjustStakingBalance(data);
+    const data = await fetchTreasuryData(
+      context.env.ETH_RPC_URL,
+      context.env.BEACON_API_URL,
+    );
 
-    const response = new Response(JSON.stringify(adjustedData), {
+    const response = new Response(JSON.stringify(data), {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

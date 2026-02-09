@@ -2,7 +2,6 @@
 
 import {
   fetchTreasuryData,
-  adjustStakingBalance,
   type TreasuryResponse,
 } from "../lib/treasury.ts";
 
@@ -26,11 +25,11 @@ async function getTreasuryData(): Promise<TreasuryResponse> {
   }
 
   const ethRpcUrl = Deno.env.get("ETH_RPC_URL");
-  const data = await fetchTreasuryData(ethRpcUrl!);
-  const adjustedData = adjustStakingBalance(data);
+  const beaconApiUrl = Deno.env.get("BEACON_API_URL");
+  const data = await fetchTreasuryData(ethRpcUrl!, beaconApiUrl!);
 
-  await kv.set(CACHE_KEY, { data: adjustedData, timestamp: Date.now() });
-  return adjustedData;
+  await kv.set(CACHE_KEY, { data, timestamp: Date.now() });
+  return data;
 }
 
 // =============================================================================

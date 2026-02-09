@@ -15,10 +15,11 @@ interface Erc20Balances {
 }
 
 interface ApiResponse {
-  balances: EthBalances
-  daoTokenBalances: Erc20Balances
-  wethBalances: Erc20Balances
-  daiBalances: Erc20Balances
+  staked: string
+  eth: EthBalances
+  dao: Erc20Balances
+  weth: Erc20Balances
+  dai: Erc20Balances
 }
 
 export interface TokenTotals {
@@ -36,10 +37,10 @@ export interface TreasuryData {
     dai: string
     dao: string
   }
-  balances: EthBalances
-  daoTokenBalances: Erc20Balances & { total: string }
-  wethBalances: Erc20Balances & { total: string }
-  daiBalances: Erc20Balances & { total: string }
+  eth: EthBalances
+  dao: Erc20Balances & { total: string }
+  weth: Erc20Balances & { total: string }
+  dai: Erc20Balances & { total: string }
 }
 
 function formatNumber(n: number): string {
@@ -67,10 +68,10 @@ function sumErc20Balances(balances: Erc20Balances): bigint {
 }
 
 function calculateTreasuryData(response: ApiResponse): TreasuryData {
-  const totalEthWei = sumEthBalances(response.balances)
-  const totalWethWei = sumErc20Balances(response.wethBalances)
-  const totalDaiWei = sumErc20Balances(response.daiBalances)
-  const totalDaoTokens = sumErc20Balances(response.daoTokenBalances)
+  const totalEthWei = sumEthBalances(response.eth) + BigInt(response.staked)
+  const totalWethWei = sumErc20Balances(response.weth)
+  const totalDaiWei = sumErc20Balances(response.dai)
+  const totalDaoTokens = sumErc20Balances(response.dao)
 
   // Convert to readable numbers (all are 18 decimals except DAO which is 16)
   const ethBalance = parseFloat(formatEther(totalEthWei))
@@ -91,17 +92,17 @@ function calculateTreasuryData(response: ApiResponse): TreasuryData {
       dai: formatNumber(daiBalance),
       dao: formatNumber(daoTokenCount),
     },
-    balances: response.balances,
-    daoTokenBalances: {
-      ...response.daoTokenBalances,
+    eth: response.eth,
+    dao: {
+      ...response.dao,
       total: totalDaoTokens.toString(),
     },
-    wethBalances: {
-      ...response.wethBalances,
+    weth: {
+      ...response.weth,
       total: totalWethWei.toString(),
     },
-    daiBalances: {
-      ...response.daiBalances,
+    dai: {
+      ...response.dai,
       total: totalDaiWei.toString(),
     },
   }
@@ -127,10 +128,10 @@ export function useTreasuryBalance() {
   return {
     totals: data?.totals,
     formattedTotals: data?.formattedTotals,
-    balances: data?.balances,
-    daoTokenBalances: data?.daoTokenBalances,
-    wethBalances: data?.wethBalances,
-    daiBalances: data?.daiBalances,
+    eth: data?.eth,
+    dao: data?.dao,
+    weth: data?.weth,
+    dai: data?.dai,
     isLoading,
     isError,
   }

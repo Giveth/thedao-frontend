@@ -1,5 +1,6 @@
 import { createPublicClient, http, parseAbi, type Address } from "viem";
 import { mainnet } from "viem/chains";
+import { fetchStakedBalance } from "./validators.ts";
 
 // =============================================================================
 // Types
@@ -19,10 +20,11 @@ export interface Erc20Balances {
 }
 
 export interface TreasuryResponse {
-  balances: EthBalances;
-  daoTokenBalances: Erc20Balances;
-  wethBalances: Erc20Balances;
-  daiBalances: Erc20Balances;
+  staked: string;
+  eth: EthBalances;
+  dao: Erc20Balances;
+  weth: Erc20Balances;
+  dai: Erc20Balances;
 }
 
 // =============================================================================
@@ -61,13 +63,16 @@ const erc20BalanceOfAbi = parseAbi([
 // Treasury Data Fetching
 // =============================================================================
 
-export async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResponse> {
+export async function fetchTreasuryData(
+  ethRpcUrl: string,
+  beaconApiUrl: string,
+): Promise<TreasuryResponse> {
   const client = createPublicClient({
     chain: mainnet,
     transport: http(ethRpcUrl),
   });
 
-  const [ethResults, daoTokenResults, wethResults, daiResults] = await Promise.all([
+  const [ethResults, daoTokenResults, wethResults, daiResults, staked] = await Promise.all([
     client.multicall({
       contracts: ETH_TREASURY_ADDRESSES.map((address) => ({
         address: MULTICALL3_ADDRESS,
@@ -100,6 +105,7 @@ export async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResp
         args: [address],
       })),
     }),
+    fetchStakedBalance(beaconApiUrl),
   ]);
 
   const toEthBalances = (results: typeof ethResults): EthBalances => ({
@@ -116,28 +122,10 @@ export async function fetchTreasuryData(ethRpcUrl: string): Promise<TreasuryResp
   });
 
   return {
-    balances: toEthBalances(ethResults),
-    daoTokenBalances: toErc20Balances(daoTokenResults),
-    wethBalances: toErc20Balances(wethResults),
-    daiBalances: toErc20Balances(daiResults),
-  };
-}
-
-// =============================================================================
-// Staking Balance Adjustment
-// =============================================================================
-
-/** Add 69,420 ETH back to stakingMultisig to account for the ETH moved out for staking */
-export function adjustStakingBalance(data: TreasuryResponse): TreasuryResponse {
-  const stakedEth = "69420000000000000000000"; // 69,420 ETH in wei
-  const currentStakingBalance = BigInt(data.balances.stakingMultisig);
-  const adjustedStakingBalance = currentStakingBalance + BigInt(stakedEth);
-
-  return {
-    ...data,
-    balances: {
-      ...data.balances,
-      stakingMultisig: adjustedStakingBalance.toString(),
-    },
+    staked,
+    eth: toEthBalances(ethResults),
+    dao: toErc20Balances(daoTokenResults),
+    weth: toErc20Balances(wethResults),
+    dai: toErc20Balances(daiResults),
   };
 }

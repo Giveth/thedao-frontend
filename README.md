@@ -50,16 +50,18 @@ deno task start
 | Variable      | Required | Description                                                                 |
 | ------------- | -------- | --------------------------------------------------------------------------- |
 | `ETH_RPC_URL` | Yes      | Ethereum JSON-RPC endpoint URL (e.g., from DRPC, Alchemy, Infura, or a local node). Used to fetch treasury balances from the blockchain. |
+| `BEACON_API_URL` | Yes      | Beacon API endpoint URL (e.g., from DRPC, Alchemy?, Infura?, or a local node). Used to fetch validator balances from the beacon chain. |
 
 ### Example `.env` file
 
 ```env
-ETH_RPC_URL=https://lb.drpc.org/ogrpc?network=ethereum&dkey=your-api-key
+ETH_RPC_URL=https://lb.drpc.live/ethereum/<your-api-key>
+BEACON_API_URL=https://lb.drpc.live/eth-beacon-chain/<your-api-key>
 ```
 
 > **Note:** Deno automatically loads `.env` files. You can also pass environment variables directly when running:
 > ```bash
-> ETH_RPC_URL=https://... deno task start
+> ETH_RPC_URL=https://... BEACON_API_URL=https://... deno task start
 > ```
 
 ## Deno Deploy Configuration
@@ -78,7 +80,7 @@ When deploying to [Deno Deploy](https://deno.com/deploy), use the following sett
 
 ### Environment Variables on Deno Deploy
 
-Make sure to configure the `ETH_RPC_URL` environment variable in your Deno Deploy project settings under **Settings → Environment Variables**.
+Make sure to configure the `ETH_RPC_URL` and `BEACON_API_URL` environment variables in your Deno Deploy project settings under **Settings → Environment Variables**.
 
 ## Project Structure
 
