@@ -7,7 +7,7 @@ const curatorsRow1 = [
   {
     image: "/taylor-monahan.webp",
     name: "Taylor Monahan",
-    organization: "Metamask",
+    organization: "Independent",
   },
   {
     image: "/jordi-baylina.webp",
