@@ -5,8 +5,8 @@ export default {
   prerender() {
     return [
       "/",
+      "/eth-security-badge",
       "/sitemap.xml",
-      // Add any other routes you want to prerender
     ];
   },
 } satisfies Config;
