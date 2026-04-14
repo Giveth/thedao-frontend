@@ -50,7 +50,7 @@ export default function EthSecurityBadge() {
           <p className="text-xl mb-8 text-dao-green">For the top Ethereum Security Experts</p>
           
           <motion.a
-            href="https://giveth.typeform.com/ethsecbadge"
+            href="https://t.me/ETHSecurityBadges_bot"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
