@@ -6,7 +6,7 @@ export function meta() {
   return generateMeta({
     title: "ETHSecurity Badge",
     description: "The ETHSecurity Badge recognizes leading researchers helping secure the Ethereum ecosystem. Badge holders gain visibility and direct influence over security funding.",
-    url: "/eth-security-badges",
+    url: "/ethsecurity-badges",
   });
 }
 
