@@ -3,7 +3,7 @@ import { SITE_URL } from "~/data/site";
 // Define all pages for the sitemap
 const pages = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
-  { path: "/eth-security-badge", priority: "0.8", changefreq: "monthly" },
+  { path: "/eth-security-badges", priority: "0.8", changefreq: "monthly" },
 ];
 
 export function loader() {

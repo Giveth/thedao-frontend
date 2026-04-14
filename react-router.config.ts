@@ -5,7 +5,7 @@ export default {
   prerender() {
     return [
       "/",
-      "/eth-security-badge",
+      "/eth-security-badges",
       "/sitemap.xml",
     ];
   },
