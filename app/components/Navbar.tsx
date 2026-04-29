@@ -3,7 +3,8 @@ import { motion } from 'motion/react';
 
 const navItems = [
   { label: 'Home', path: '/' },
-  { label: 'ETHSecurity Badges', path: '/ethsecurity-badges', isNew: true },
+  { label: 'ETHSecurity Badges', path: '/ethsecurity-badges' },
+  { label: 'Funding Rounds', path: '/funding-rounds', isNew: true },
 ];
 
 export default function Navbar() {

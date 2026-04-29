@@ -6,6 +6,7 @@ export default {
     return [
       "/",
       "/ethsecurity-badges",
+      "/funding-rounds",
       "/sitemap.xml",
     ];
   },
