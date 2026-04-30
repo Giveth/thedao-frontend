@@ -160,7 +160,6 @@ function RoundCard({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 * index }}
-      whileHover={{ y: -4 }}
       className={`group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:border-[#00ff88]/50 transition-all duration-300 flex flex-col ${reversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-6`}
     >
       {/* Card glow */}
@@ -249,8 +248,8 @@ function RoundCard({
 
       {/* Image */}
       <div className="relative z-10 md:w-[45%] shrink-0">
-        <div className="aspect-video bg-white/5 border border-white/10 rounded-xl overflow-hidden flex items-center justify-center">
-          <motion.img
+        <div className="aspect-video overflow-hidden flex items-center justify-center">
+          <img
             src={round.image}
             alt={round.title}
             width={1280}
@@ -258,8 +257,6 @@ function RoundCard({
             loading={index === 0 ? 'eager' : 'lazy'}
             decoding="async"
             className="w-full h-full object-cover"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.4 }}
           />
         </div>
       </div>
