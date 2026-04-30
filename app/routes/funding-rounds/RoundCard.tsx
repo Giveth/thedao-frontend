@@ -17,11 +17,9 @@ export default function RoundCard({
   const isOpen = round.status === 'Open Round';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.15 * index }}
-      className={`group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:border-[#00ff88]/50 transition-all duration-300 flex flex-col ${reversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-6`}
+    <div
+      style={{ animationDelay: `${800 + index * 300}ms` }}
+      className={`group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:border-[#00ff88]/50 transition-all duration-300 flex flex-col ${reversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-6 animate-in fade-in duration-1000 fill-mode-backwards`}
     >
       {/* Card glow */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00ff88]/0 to-[#00ff88]/0 group-hover:from-[#00ff88]/10 group-hover:to-[#00ff88]/5 transition-all duration-300" />
@@ -145,6 +143,6 @@ export default function RoundCard({
           </p>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
