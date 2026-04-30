@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 
@@ -11,7 +11,6 @@ const navItems = [
 
 export default function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Close the mobile menu on route changes and on Escape.
@@ -51,27 +50,31 @@ export default function Navbar() {
                   new
                 </motion.span>
               )}
-              <motion.button
-                onClick={() => navigate(item.path)}
+              <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
                 whileHover={{ y: -2 }}
-                className={`relative text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
-                  isActive
-                    ? 'text-dao-green font-normal'
-                    : 'text-white/80 hover:text-dao-green font-light'
-                }`}
+                className="inline-block"
               >
-                {item.label}
-                {isActive && (
-                  <motion.div
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-dao-green rounded-full"
-                    layoutId="navIndicator"
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </motion.button>
+                <Link
+                  to={item.path}
+                  className={`relative inline-block text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
+                    isActive
+                      ? 'text-dao-green font-normal'
+                      : 'text-white/80 hover:text-dao-green font-light'
+                  }`}
+                >
+                  {item.label}
+                  {isActive && (
+                    <motion.div
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-dao-green rounded-full"
+                      layoutId="navIndicator"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </motion.div>
             </div>
           );
         })}
@@ -129,14 +132,11 @@ export default function Navbar() {
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
-                  <button
+                  <Link
                     key={item.path}
-                    type="button"
+                    to={item.path}
                     role="menuitem"
-                    onClick={() => {
-                      navigate(item.path);
-                      setMobileOpen(false);
-                    }}
+                    onClick={() => setMobileOpen(false)}
                     className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-[16px] leading-[24px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
                       isActive
                         ? 'text-dao-green font-normal bg-white/5'
@@ -149,7 +149,7 @@ export default function Navbar() {
                         new
                       </span>
                     )}
-                  </button>
+                  </Link>
                 );
               })}
             </motion.div>
