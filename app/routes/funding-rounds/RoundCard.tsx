@@ -116,16 +116,6 @@ export default function RoundCard({
               >
                 Donate
               </motion.a>
-              <motion.a
-                href="https://qf.giveth.io/qf/apply?apcid=0063975a838645fd68131600"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white px-8 py-3 rounded-xl shadow-lg shadow-red-900/50 transition-all duration-300"
-              >
-                Apply Now
-              </motion.a>
             </div>
           </>
         ) : (
