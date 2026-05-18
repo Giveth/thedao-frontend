@@ -1,14 +1,13 @@
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 import { generateMeta } from '~/utils/meta';
-import { rounds } from './data';
+import { getRoundsMetaDescription, rounds } from './data';
 import RoundCard from './RoundCard';
 
 export function meta() {
   return generateMeta({
     title: 'Funding Rounds',
-    description:
-      'TheDAO Security Fund Quadratic Funding rounds — supporting people and projects making Ethereum safer. The Ethereum Security round on Giveth has a 500 ETH matching pool, open April 23 – May 14, 2026.',
+    description: getRoundsMetaDescription(),
     url: '/funding-rounds',
   });
 }

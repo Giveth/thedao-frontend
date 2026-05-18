@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Share2 } from 'lucide-react';
 import ShareDialog from '~/components/ShareDialog';
-import type { Round } from './data';
+import { getRoundDeadline, getRoundStatus, type Round, type RoundStatus } from './data';
+
+const STATUS_STYLES: Record<RoundStatus, { dot: string; text: string; bg: string }> = {
+  'Open Round': { dot: '#5CB75A', text: '#5CB75A', bg: 'rgba(92,183,90,0.15)' },
+  Closed: { dot: '#FF3B38', text: '#FF9B99', bg: 'rgba(255,59,56,0.28)' },
+  'Coming Soon': { dot: '#FFB432', text: '#FFB432', bg: 'rgba(255,180,50,0.15)' },
+};
 
 export default function RoundCard({
   round,
@@ -14,7 +20,12 @@ export default function RoundCard({
   index: number;
 }) {
   const [shareOpen, setShareOpen] = useState(false);
-  const isOpen = round.status === 'Open Round';
+  const status = getRoundStatus(round);
+  const deadline = getRoundDeadline(round);
+  const isOpen = status === 'Open Round';
+  const isComingSoon = status === 'Coming Soon';
+  const isClosed = status === 'Closed';
+  const statusStyle = STATUS_STYLES[status];
 
   return (
     <div
@@ -61,18 +72,22 @@ export default function RoundCard({
         <div className="flex items-center justify-between gap-3 mb-4">
           <span
             className="inline-flex items-center gap-1.5 w-fit px-3 py-1 rounded-full text-sm"
-            style={{
-              background: round.status === 'Open Round' ? 'rgba(92,183,90,0.15)' : 'rgba(255,180,50,0.15)',
-              color: round.status === 'Open Round' ? '#5CB75A' : '#FFB432',
-            }}
+            style={{ background: statusStyle.bg, color: statusStyle.text }}
           >
-            <motion.span
-              className="w-2 h-2 rounded-full inline-block"
-              style={{ backgroundColor: round.status === 'Open Round' ? '#5CB75A' : '#FFB432' }}
-              animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            {round.status}
+            {isClosed ? (
+              <span
+                className="w-2 h-2 rounded-full inline-block"
+                style={{ backgroundColor: statusStyle.dot }}
+              />
+            ) : (
+              <motion.span
+                className="w-2 h-2 rounded-full inline-block"
+                style={{ backgroundColor: statusStyle.dot }}
+                animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            )}
+            {status}
           </span>
           {round.shareUrl && (
             <button
@@ -87,10 +102,10 @@ export default function RoundCard({
         </div>
 
         <h3 className="text-2xl text-white mb-3">
-          {isOpen ? round.title : 'Stay tuned for upcoming rounds'}
+          {isComingSoon ? 'Stay tuned for upcoming rounds' : round.title}
         </h3>
 
-        {isOpen ? (
+        {!isComingSoon ? (
           <>
             <p className="leading-relaxed mb-4 text-white">{round.description}</p>
 
@@ -100,23 +115,25 @@ export default function RoundCard({
                 Matching Pool: <span className="text-gray-300">{round.pool}</span>
               </span>
               <span className="text-white">
-                Round duration and dates: <span className="text-gray-300">{round.deadline}</span>
+                Round duration and dates: <span className="text-gray-300">{deadline}</span>
               </span>
             </div>
 
             {/* CTA */}
-            <div className="flex flex-wrap gap-4">
-              <motion.a
-                href="https://qf.giveth.io/qf/ethereum-security"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white px-8 py-3 rounded-xl shadow-lg shadow-red-900/50 transition-all duration-300"
-              >
-                Donate
-              </motion.a>
-            </div>
+            {isOpen && (
+              <div className="flex flex-wrap gap-4">
+                <motion.a
+                  href="https://qf.giveth.io/qf/ethereum-security"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white px-8 py-3 rounded-xl shadow-lg shadow-red-900/50 transition-all duration-300"
+                >
+                  Donate
+                </motion.a>
+              </div>
+            )}
           </>
         ) : (
           <p className="leading-relaxed mb-6 text-white">
