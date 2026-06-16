@@ -1,9 +1,10 @@
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   plugins: [
     tailwindcss(), 
     reactRouter(), 
@@ -68,20 +69,11 @@ export default defineConfig(({ command }) => ({
   server: {
     port: 3000,
   },
-  ...denoWorkaround(command),
-}));
-
-function denoWorkaround(command: string) {
-  const isDeno = typeof globalThis !== "undefined" && "Deno" in globalThis;
-  if (!isDeno || command !== "build") {
-    return undefined;
-  }
-  // See: https://github.com/remix-run/react-router/issues/12568#issuecomment-2625776697
-  return {
-    resolve: {
-      alias: {
-        "react-dom/server": "react-dom/server.node",
-      },
+  resolve: {
+    alias: {
+      "react-dom/server": fileURLToPath(
+        new URL("./app/lib/react-dom-server.node.mjs", import.meta.url),
+      ),
     },
-  };
-}
+  },
+});
