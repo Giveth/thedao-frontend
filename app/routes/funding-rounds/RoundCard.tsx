@@ -136,18 +136,32 @@ export default function RoundCard({
             )}
           </>
         ) : (
-          <p className="leading-relaxed mb-6 text-white">
-            More funding opportunities are coming soon.{' '}
-            <a
-              href="https://x.com/thedaofund"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-dao-green hover:text-[#00ff88] underline transition-colors duration-200"
-            >
-              Follow our updates
-            </a>{' '}
-            and be the first to know when new rounds open.
-          </p>
+          <>
+            <p className="leading-relaxed mb-6 text-white">
+              More funding opportunities are coming soon.{' '}
+              <a
+                href="https://x.com/thedaofund"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-dao-green hover:text-[#00ff88] underline transition-colors duration-200"
+              >
+                Follow our updates
+              </a>{' '}
+              and be the first to know when new rounds open.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <motion.a
+                href="https://giveth.typeform.com/TheDAO-RO-App1"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white px-8 py-3 rounded-xl shadow-lg shadow-red-900/50 transition-all duration-300"
+              >
+                Apply to host
+              </motion.a>
+            </div>
+          </>
         )}
       </div>
     </div>
