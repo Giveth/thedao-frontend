@@ -7,6 +7,7 @@ export default {
       "/",
       "/ethsecurity-badges",
       "/funding-rounds",
+      "/transparency",
       "/sitemap.xml",
     ];
   },

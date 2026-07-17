@@ -5,6 +5,7 @@ const pages = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/ethsecurity-badges", priority: "0.8", changefreq: "monthly" },
   { path: "/funding-rounds", priority: "0.8", changefreq: "monthly" },
+  { path: "/transparency", priority: "0.8", changefreq: "weekly" },
 ];
 
 export function loader() {

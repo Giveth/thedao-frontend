@@ -6,7 +6,8 @@ import { Menu, X } from 'lucide-react';
 const navItems = [
   { label: 'Home', path: '/' },
   { label: 'ETHSecurity Badges', path: '/ethsecurity-badges' },
-  { label: 'Funding Rounds', path: '/funding-rounds', isNew: true },
+  { label: 'Funding Rounds', path: '/funding-rounds' },
+  { label: 'Transparency', path: '/transparency', isNew: true },
 ];
 
 export default function Navbar() {
