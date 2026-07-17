@@ -7,9 +7,6 @@ const navItems = [
   { label: 'Home', path: '/' },
   { label: 'ETHSecurity Badges', path: '/ethsecurity-badges' },
   { label: 'Funding Rounds', path: '/funding-rounds', isNew: true },
-  // Served by functions/transparency (proxy to its own Pages project), not a
-  // React Router route — needs a full document load.
-  { label: 'Transparency', path: '/transparency', reloadDocument: true },
 ];
 
 export default function Navbar() {
@@ -62,7 +59,6 @@ export default function Navbar() {
               >
                 <Link
                   to={item.path}
-                  reloadDocument={item.reloadDocument}
                   className={`relative inline-block text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
                     isActive
                       ? 'text-dao-green font-normal'
@@ -139,7 +135,6 @@ export default function Navbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    reloadDocument={item.reloadDocument}
                     role="menuitem"
                     onClick={() => setMobileOpen(false)}
                     className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-[16px] leading-[24px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
