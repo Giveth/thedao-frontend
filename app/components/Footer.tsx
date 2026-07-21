@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full py-8 md:py-12 border-t border-white/5">
       <div className="max-w-[1618px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="text-white text-base font-normal leading-normal">
-          © 2025 TheDAO LLC. All rights reserved.
+          © 2025–{new Date().getFullYear()} TheDAO LLC. All rights reserved.
         </p>
         <div className="flex items-center gap-4">
           <a 
