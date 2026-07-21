@@ -148,11 +148,14 @@ export function buildLandingHtml(origin: string, pathname: string, project: stri
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${esc(image.toString())}">
-<meta http-equiv="refresh" content="0;url=${esc(target)}">
 <link rel="canonical" href="${esc(target)}">
 </head>
 <body>
 <p>Redirecting to <a href="${esc(target)}">the transparency page</a>…</p>
+<!-- JS redirect, not meta refresh: Telegram's (and some other) link-preview
+     crawlers follow meta refresh and would scrape /transparency's generic
+     card instead of this page's tags. Crawlers don't execute JS. -->
+<script>location.replace(${JSON.stringify(target)})</script>
 </body>
 </html>`;
 }
