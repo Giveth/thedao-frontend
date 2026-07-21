@@ -67,11 +67,14 @@ export default function ProjectModal({
     ? Number(onchain.streamFallback.flowRate * 86400n) / 1e18
     : 0;
 
-  // The /s/<project> landing page serves the Twitter card; its breakdown
-  // image is computed server-side, so the link carries no params.
+  // The /s/<project> landing page serves the Twitter card (a raw .png URL
+  // would get no preview); its breakdown image is computed server-side, so
+  // the link carries no params. Current origin so staging shares stay on
+  // staging; the modal only opens client-side, so location is available.
+  const shareOrigin = globalThis.location?.origin ?? SITE_URL;
   const shareUrl = project
     ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        `${SITE_URL}/s/${encodeURIComponent(project.name)}`,
+        `${shareOrigin}/s/${encodeURIComponent(project.name)}`,
       )}&text=${encodeURIComponent(
         `${project.name} received ~${formatEth(project.displayTotalEth, 2)} ETH from ${SITE_NAME} for Ethereum security.`,
       )}`
