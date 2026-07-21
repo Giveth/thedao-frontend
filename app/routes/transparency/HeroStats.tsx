@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import CountUp from '~/components/text-animations/CountUp';
 import { CO_FUNDER_USD_RAISED, projects } from './data';
 import { formatEth, formatUsd } from './format';
@@ -17,11 +16,9 @@ function StatCard({
   className?: string;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-      className={`group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-8 text-center hover:border-[#00ff88]/50 transition-all duration-300 ${className}`}
+    <div
+      style={{ animationDelay: `${0.2 + index * 0.15}s` }}
+      className={`motion-safe:animate-fade-in-up group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-8 text-center hover:border-[#00ff88]/50 transition-all duration-300 ${className}`}
     >
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00ff88]/0 to-[#00ff88]/0 group-hover:from-[#00ff88]/10 group-hover:to-[#00ff88]/5 transition-all duration-300" />
       <div className="relative z-10 flex flex-col items-center gap-3">
@@ -33,7 +30,7 @@ function StatCard({
         </span>
         {sub && <span className="text-sm text-white/60">{sub}</span>}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -48,11 +45,9 @@ export default function HeroStats({
 }) {
   return (
     <div className="grid md:grid-cols-2 gap-6 mb-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-8 text-center hover:border-[#00ff88]/50 transition-all duration-300 md:col-span-2"
+      <div
+        style={{ animationDelay: '0.2s' }}
+        className="motion-safe:animate-fade-in-up group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-8 text-center hover:border-[#00ff88]/50 transition-all duration-300 md:col-span-2"
       >
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00ff88]/0 to-[#00ff88]/0 group-hover:from-[#00ff88]/10 group-hover:to-[#00ff88]/5 transition-all duration-300" />
         <div className="relative z-10 flex flex-col items-center gap-4 md:gap-8">
@@ -79,7 +74,7 @@ export default function HeroStats({
           </p>
 
         </div>
-      </motion.div>
+      </div>
 
       <StatCard
         label="Security projects funded"
