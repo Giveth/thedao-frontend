@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
@@ -13,6 +13,31 @@ const navItems = [
 export default function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const pillRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+
+  const activeIndex = navItems.findIndex((item) => item.path === location.pathname);
+
+  useEffect(() => {
+    const measure = () => {
+      const pill = pillRef.current;
+      const link = activeIndex === -1 ? null : linkRefs.current[activeIndex];
+      if (!pill || !link) {
+        setIndicator(null);
+        return;
+      }
+      const pillRect = pill.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      setIndicator({ left: linkRect.left - pillRect.left, width: linkRect.width });
+    };
+    measure();
+    // Link widths shift once the webfont finishes loading.
+    document.fonts?.ready.then(measure);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [activeIndex]);
 
   // Close the mobile menu on route changes and on Escape.
   useEffect(() => {
@@ -36,7 +61,18 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       {/* Desktop / tablet horizontal pill */}
-      <div className="hidden md:flex items-center gap-8 px-16 py-3 rounded-full bg-white/5 backdrop-blur-xl border border-white/10">
+      <div
+        ref={pillRef}
+        className="relative hidden md:flex items-center gap-8 px-16 py-3 rounded-full bg-white/5 backdrop-blur-xl border border-white/10"
+      >
+        {indicator && (
+          <motion.div
+            className="absolute bottom-2 h-[2px] bg-dao-green rounded-full"
+            initial={false}
+            animate={{ left: indicator.left, width: indicator.width }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+        )}
         {navItems.map((item, i) => {
           const isActive = location.pathname === item.path;
           return (
@@ -60,6 +96,9 @@ export default function Navbar() {
               >
                 <Link
                   to={item.path}
+                  ref={(el) => {
+                    linkRefs.current[i] = el;
+                  }}
                   className={`relative inline-block text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
                     isActive
                       ? 'text-dao-green font-normal'
@@ -67,13 +106,6 @@ export default function Navbar() {
                   }`}
                 >
                   {item.label}
-                  {isActive && (
-                    <motion.div
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-dao-green rounded-full"
-                      layoutId="navIndicator"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
                 </Link>
               </motion.div>
             </div>
