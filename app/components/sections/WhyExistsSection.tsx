@@ -2,7 +2,7 @@ import FadeContent from '../text-animations/FadeContent';
 
 export default function WhyExistsSection() {
   return (
-    <section className="w-full bg-dao-blue-dark">
+    <section id="story" className="w-full bg-dao-blue-dark scroll-mt-28">
       <div className="max-w-10xl mx-auto px-8 md:px-24 lg:px-44 pt-26 pb-42 flex flex-col items-center">
         {/* Main content container - 980px */}
         <div className="flex flex-col gap-12 w-full max-w-[980px]">

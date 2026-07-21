@@ -1,4 +1,5 @@
 import type { Thing, WithContext } from "schema-dts";
+import { FAQ_GROUPS } from "~/data/faq";
 import {
   ORGANIZATION_LEGAL_NAME,
   ORGANIZATION_NAME,
@@ -46,12 +47,33 @@ export function generateWebSiteSchema(): WithContext<Thing> {
 }
 
 /**
+ * Generate FAQPage structured data from the homepage FAQ content
+ */
+export function generateFaqSchema(): WithContext<Thing> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_GROUPS.flatMap((group) =>
+      group.items.map((item) => ({
+        "@type": "Question" as const,
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer" as const,
+          text: item.plainAnswer,
+        },
+      }))
+    ),
+  };
+}
+
+/**
  * Generate all structured data for the homepage
  */
 export function generateHomepageStructuredData(): WithContext<Thing>[] {
   return [
     generateOrganizationSchema(),
     generateWebSiteSchema(),
+    generateFaqSchema(),
   ];
 }
 

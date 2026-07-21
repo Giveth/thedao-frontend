@@ -2,6 +2,7 @@ import HeroSection from '~/components/sections/HeroSection'
 import TreasurySection from '~/components/sections/TreasurySection'
 import CuratorsSection from '~/components/sections/CuratorsSection'
 import WhyExistsSection from '~/components/sections/WhyExistsSection'
+import FaqSection from '~/components/sections/FaqSection'
 import Footer from '~/components/Footer'
 import { generateMeta } from '~/utils/meta'
 import { generateHomepageStructuredData, structuredDataToMetaTags } from '~/utils/structured-data'
@@ -40,6 +41,7 @@ export default function Home() {
         <CuratorsSection />
       </div>
       <WhyExistsSection />
+      <FaqSection />
       <Footer />
     </div>
   )

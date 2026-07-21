@@ -6,7 +6,7 @@ function HeroSection() {
   const greenColor = 'var(--color-dao-green)';
 
   return (
-    <section className="min-h-dvh w-full flex flex-col items-center justify-center relative bg-linear-to-br from-dao-blue to-dao-blue-dark py-8">
+    <section id="home" className="min-h-dvh w-full flex flex-col items-center justify-center relative bg-linear-to-br from-dao-blue to-dao-blue-dark py-8">
       <main className="relative z-10 flex flex-col items-center justify-center px-4 text-center gap-6 sm:gap-8 md:gap-12 max-w-10xl mx-auto w-full">
         {/* Logo */}
         <div>

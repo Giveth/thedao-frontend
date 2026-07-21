@@ -32,7 +32,7 @@ export default function TreasurySection() {
   const titleText = titleParts.length > 0 ? titleParts.join(' + ') : undefined
 
   return (
-    <section className="w-full px-4 pt-16">
+    <section id="treasury" className="w-full px-4 pt-16 scroll-mt-28">
       <div className="max-w-10xl mx-auto mt-[calc(-100px)] relative z-10">
         <div
           className="relative bg-dao-blue-light rounded-card px-8 py-[76px] md:px-16 md:py-[115px] overflow-hidden shadow-md"
