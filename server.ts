@@ -4,6 +4,21 @@ import { serveDir } from "@std/http/file-server";
 import treasury from "./api/treasury.ts";
 import health from "./api/health.ts";
 import share from "./api/share.ts";
+import { SITE_URL } from "./app/data/site.ts";
+
+/**
+ * Prerendered pages bake absolute SITE_URL links into their meta (og:image,
+ * canonical). When served from another origin (staging), rewrite them to the
+ * request origin so link previews resolve end-to-end without production.
+ */
+async function rewriteOrigin(res: Response, origin: string): Promise<Response> {
+  if (origin === SITE_URL || res.status !== 200) return res;
+  if (!res.headers.get("Content-Type")?.includes("text/html")) return res;
+  const html = (await res.text()).replaceAll(SITE_URL, origin);
+  const headers = new Headers(res.headers);
+  headers.delete("Content-Length");
+  return new Response(html, { status: res.status, headers });
+}
 
 // =============================================================================
 // API Router
@@ -73,7 +88,7 @@ Deno.serve(async (req) => {
         quiet: true,
       });
       if (fallbackRes.status === 200) {
-        return fallbackRes;
+        return rewriteOrigin(fallbackRes, url.origin);
       }
     } catch {
       // Fallback to index.html
@@ -87,14 +102,14 @@ Deno.serve(async (req) => {
         quiet: true,
       });
       if (indexRes.status === 200) {
-        return indexRes;
+        return rewriteOrigin(indexRes, url.origin);
       }
     } catch {
       // Return original 404
     }
   }
 
-  return res;
+  return rewriteOrigin(res, url.origin);
 });
 
 console.log("🚀 Server running - serving static files + API");

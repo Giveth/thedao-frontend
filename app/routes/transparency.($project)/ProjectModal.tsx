@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ExternalLink, X } from 'lucide-react';
 import { SITE_NAME, SITE_URL } from '~/data/site';
-import { getStreamUrl, SEAL_ONCHAIN } from './data';
+import { getStreamUrl, SEAL_ONCHAIN, slugifyProject } from './data';
 import { formatEth, formatUsd } from './format';
 import type { RankedProject } from './ProjectsTable';
 
@@ -67,14 +67,14 @@ export default function ProjectModal({
     ? Number(onchain.streamFallback.flowRate * 86400n) / 1e18
     : 0;
 
-  // The /s/<project> landing page serves the Twitter card (a raw .png URL
-  // would get no preview); its breakdown image is computed server-side, so
-  // the link carries no params. Current origin so staging shares stay on
-  // staging; the modal only opens client-side, so location is available.
+  // The prerendered /transparency/<slug> page carries the project's card
+  // meta (a raw .png URL would get no preview), and opens this modal for
+  // humans. Current origin so staging shares stay on staging; the modal
+  // only opens client-side, so location is available.
   const shareOrigin = globalThis.location?.origin ?? SITE_URL;
   const shareUrl = project
     ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        `${shareOrigin}/s/${encodeURIComponent(project.name)}`,
+        `${shareOrigin}/transparency/${slugifyProject(project.name)}`,
       )}&text=${encodeURIComponent(
         `${project.name} received ~${formatEth(project.displayTotalEth, 2)} ETH from ${SITE_NAME} for Ethereum security.`,
       )}`

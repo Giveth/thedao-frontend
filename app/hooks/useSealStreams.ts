@@ -7,7 +7,7 @@ import {
   SEAL_ONCHAIN,
   SUPERFLUID_SUBGRAPH_URL,
   type StreamState,
-} from '~/routes/transparency/data'
+} from '~/routes/transparency.($project)/data'
 
 interface SubgraphStream {
   receiver: { id: string }

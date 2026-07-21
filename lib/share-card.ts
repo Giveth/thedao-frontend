@@ -3,6 +3,8 @@
 // (functions/) render the HTML with workers-og, the Deno server (api/)
 // renders the same HTML with satori + resvg-wasm.
 
+import { slugifyProject } from "./transparency-data.ts";
+
 export type ShareRowKind = "round" | "grant" | "stream";
 export type ShareRow = [label: string, eth: string, kind: ShareRowKind | undefined];
 
@@ -128,7 +130,8 @@ export function buildLandingHtml(origin: string, pathname: string, project: stri
 
   const title = `${project} — funded by TheDAO Security Fund`;
   const description = `Full breakdown of the funding ${project} received for Ethereum security. Public, verifiable, on-chain.`;
-  const target = `${origin}/transparency`;
+  // Legacy /s/<name> links land on the project's own page (modal open).
+  const target = `${origin}/transparency/${slugifyProject(project)}`;
 
   return `<!doctype html>
 <html lang="en">

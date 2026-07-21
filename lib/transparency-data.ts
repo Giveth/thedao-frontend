@@ -96,6 +96,19 @@ export function parseRound1Csv(raw: string): Project[] {
   return rows;
 }
 
+/**
+ * URL slug for a project's /transparency/<slug> page. Prerender asserts
+ * these are unique across the CSV, so a slug identifies one project.
+ */
+export function slugifyProject(name: string): string {
+  return name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 // =============================================================================
 // Static KPIs
 // =============================================================================

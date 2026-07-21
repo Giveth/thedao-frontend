@@ -1,4 +1,5 @@
 import { SITE_URL } from "~/data/site";
+import { projects, slugifyProject } from "~/routes/transparency.($project)/data";
 
 // Define all pages for the sitemap
 const pages = [
@@ -6,6 +7,11 @@ const pages = [
   { path: "/ethsecurity-badges", priority: "0.8", changefreq: "monthly" },
   { path: "/funding-rounds", priority: "0.8", changefreq: "monthly" },
   { path: "/transparency", priority: "0.8", changefreq: "weekly" },
+  ...projects.map((p) => ({
+    path: `/transparency/${slugifyProject(p.name)}`,
+    priority: "0.6",
+    changefreq: "monthly",
+  })),
 ];
 
 export function loader() {

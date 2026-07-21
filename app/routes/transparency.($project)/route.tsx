@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { Search } from 'lucide-react';
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
@@ -11,6 +12,7 @@ import {
   getMetaDescription,
   LAST_UPDATED,
   projects,
+  slugifyProject,
   SNAPSHOT_TIMESTAMP,
   USD_PER_ETH_STREAMED,
 } from './data';
@@ -18,7 +20,20 @@ import HeroStats from './HeroStats';
 import ProjectModal from './ProjectModal';
 import ProjectsTable, { type RankedProject } from './ProjectsTable';
 
-export function meta() {
+export function meta({ params }: { params: { project?: string } }) {
+  // /transparency/<slug> pages are prerendered with the project's own card
+  // meta, so shared links preview the project's breakdown image directly.
+  const project = params.project
+    ? projects.find((p) => slugifyProject(p.name) === params.project)
+    : undefined;
+  if (project) {
+    return generateMeta({
+      title: `${project.name} — funded for Ethereum security`,
+      description: `Full breakdown of the funding ${project.name} received for Ethereum security. Public, verifiable, on-chain.`,
+      image: `/s/${encodeURIComponent(project.name)}.png`,
+      url: `/transparency/${slugifyProject(project.name)}`,
+    });
+  }
   return generateMeta({
     title: 'Transparency',
     description: getMetaDescription(),
@@ -38,7 +53,10 @@ const HERO_TEXT_COLORS = [
 ];
 
 export default function Transparency() {
-  const [selectedName, setSelectedName] = useState<string | null>(null);
+  // The open modal is URL state (/transparency/<slug>): prerendered project
+  // pages load with it open, and the browser back button closes it.
+  const { project: projectSlug } = useParams();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const { streams } = useSealStreams();
   const now = useNow(1000);
@@ -73,8 +91,8 @@ export default function Transparency() {
     [rankedProjects],
   );
 
-  const selectedProject = selectedName
-    ? rankedProjects.find((p) => p.name === selectedName) ?? null
+  const selectedProject = projectSlug
+    ? rankedProjects.find((p) => slugifyProject(p.name) === projectSlug) ?? null
     : null;
 
   return (
@@ -113,7 +131,11 @@ export default function Transparency() {
           <ProjectsTable
             rankedProjects={rankedProjects}
             query={query}
-            onSelect={(project) => setSelectedName(project.name)}
+            onSelect={(project) =>
+              navigate(`/transparency/${slugifyProject(project.name)}`, {
+                preventScrollReset: true,
+              })
+            }
           />
 
           <ProjectModal
@@ -121,7 +143,7 @@ export default function Transparency() {
             streamedEth={
               selectedProject ? projectStreamedEth(selectedProject.name, streams, nowMs) : 0
             }
-            onClose={() => setSelectedName(null)}
+            onClose={() => navigate('/transparency', { preventScrollReset: true })}
           />
 
           <h2 className="mt-24 text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter text-center">

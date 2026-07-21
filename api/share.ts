@@ -63,7 +63,7 @@ function loadProjects(origin: string): Promise<Project[]> {
   projectsPromise ??= (async () => {
     try {
       const csv = await Deno.readTextFile(
-        new URL("../app/routes/transparency/round1.csv", import.meta.url),
+        new URL("../app/routes/transparency.($project)/round1.csv", import.meta.url),
       );
       return parseRound1Csv(csv);
     } catch {
