@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ExternalLink, X } from 'lucide-react';
+import { SITE_NAME, SITE_URL } from '~/data/site';
 import { getStreamUrl, SEAL_ONCHAIN } from './data';
 import { formatEth, formatUsd } from './format';
 import type { RankedProject } from './ProjectsTable';
@@ -27,15 +28,15 @@ function BreakdownRow({
   return (
     <div className="flex items-baseline justify-between gap-4 py-2.5 border-b border-white/10 last:border-b-0">
       <div className="min-w-0">
-        <span className="text-[14px] text-white/80 font-inter-tight">{label}</span>
-        {detail && <div className="text-[12px] text-white/40 mt-0.5">{detail}</div>}
+        <span className="text-[14px] md:text-[16px] text-white/80 font-inter-tight">{label}</span>
+        {detail && <div className="text-[12px] md:text-[14px] text-white/40 mt-0.5">{detail}</div>}
       </div>
       <span className="shrink-0 max-w-[45%] text-right">
-        <span className="block text-[14px] text-white tabular-nums whitespace-nowrap">
+        <span className="block text-[14px] md:text-[16px] text-white tabular-nums whitespace-nowrap">
           {children}
         </span>
         {valueDetail && (
-          <span className="block text-[12px] text-white/40 mt-0.5">{valueDetail}</span>
+          <span className="block text-[12px] md:text-[14px] text-white/40 mt-0.5">{valueDetail}</span>
         )}
       </span>
     </div>
@@ -66,6 +67,16 @@ export default function ProjectModal({
     ? Number(onchain.streamFallback.flowRate * 86400n) / 1e18
     : 0;
 
+  // The /s/<project> landing page serves the Twitter card; its breakdown
+  // image is computed server-side, so the link carries no params.
+  const shareUrl = project
+    ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        `${SITE_URL}/s/${encodeURIComponent(project.name)}`,
+      )}&text=${encodeURIComponent(
+        `${project.name} received ~${formatEth(project.displayTotalEth, 2)} ETH from ${SITE_NAME} for Ethereum security.`,
+      )}`
+    : '';
+
   return (
     <AnimatePresence>
       {project && (
@@ -78,7 +89,7 @@ export default function ProjectModal({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="relative w-[460px] max-w-[92vw] max-h-[85vh] overflow-y-auto bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl p-6 shadow-2xl"
+            className="relative w-[460px] md:w-[560px] max-w-[92vw] max-h-[85vh] overflow-y-auto bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl p-6 shadow-2xl"
             style={{
               backgroundImage:
                 'linear-gradient(160deg, rgba(44, 94, 134, 0.8) 0%, rgba(31, 67, 95, 0.95) 100%)',
@@ -92,12 +103,12 @@ export default function ProjectModal({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute top-4 right-4 p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer"
+              className="absolute top-6 right-6 p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5 md:w-6 md:h-6" />
             </button>
 
-            <h4 className="text-[20px] text-white mb-1 font-inter-tight pr-8">
+            <h4 className="text-[20px] md:text-[26px] text-white mb-1 font-inter-tight pr-8">
               {project.link ? (
                 <a
                   href={project.link}
@@ -112,7 +123,7 @@ export default function ProjectModal({
                 project.name
               )}
             </h4>
-            <p className="text-[14px] text-white/50 mb-5 font-inter-tight">Full breakdown</p>
+            <p className="text-[14px] md:text-[16px] text-white/50 mb-5 font-inter-tight">Full breakdown</p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-1.5 mb-5">
               {project.matchingPool > 0 && (
@@ -197,25 +208,36 @@ export default function ProjectModal({
               )}
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-4">
-              <span className="text-[14px] text-white/80 font-inter-tight font-bold uppercase">
+            <div className="flex flex-col items-center text-center gap-1 px-4">
+              <span className="text-[14px] md:text-[16px] text-white/80 font-inter-tight font-bold uppercase">
                 Total
               </span>
-              <span className="text-right">
-                <span className="block text-[18px] font-semibold text-dao-green tabular-nums font-inter-tight">
-                  {formatEth(project.displayTotalEth)} ETH
-                </span>
-                <span className="block text-[12px] text-white/50 tabular-nums">
-                  ≈ {formatUsd(project.displayUsdSent)} when sent
-                </span>
+              <span className="block text-[32px] md:text-[40px] font-semibold text-dao-green tabular-nums font-inter-tight">
+                {formatEth(project.displayTotalEth)} ETH
+              </span>
+              <span className="block text-[16px] md:text-[18px] text-white/50 tabular-nums">
+                ≈ {formatUsd(project.displayUsdSent)} when sent
               </span>
             </div>
 
             {onchain && (
-              <p className="mt-4 px-4 text-[12px] text-white/40">
+              <p className="mt-4 px-4 text-[12px] md:text-[14px] text-white/40">
                 On-chain amounts update in real time from Ethereum mainnet.
               </p>
             )}
+
+            <a
+              href={shareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 w-full inline-flex items-center justify-center gap-1 bg-dao-red hover:bg-dao-red-hover text-white font-medium text-sm md:text-base px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-95"
+            >
+              Share on
+              <svg viewBox="0 0 40 40" className="w-4 h-4 md:w-5 md:h-5 fill-current" aria-hidden="true">
+                <path d="M30.2822 6H35.1873L24.4175 18.3063L37 35H27.126L19.3952 24.8554L10.5448 35H5.63979L17.0493 21.8376L5 6H15.1193L22.1036 15.2672L30.2822 6ZM28.5655 32.1107H31.2846L13.6904 8.78229H10.7687L28.5655 32.1107Z" />
+              </svg>
+              <span className="sr-only">X</span>
+            </a>
           </motion.div>
         </div>
       )}

@@ -29,3 +29,6 @@ build
 .env
 .envrc
 .denoflare
+
+# wrangler pages dev state
+.wrangler/

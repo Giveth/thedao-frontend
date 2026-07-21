@@ -1,6 +1,5 @@
-import { motion } from 'motion/react';
 import { ExternalLink } from 'lucide-react';
-import { SEAL_ONCHAIN, type Project } from './data';
+import { type Project } from './data';
 import { formatEth, formatUsd } from './format';
 
 export type RankedProject = Project & {
@@ -12,11 +11,19 @@ export type RankedProject = Project & {
 
 export default function ProjectsTable({
   rankedProjects,
+  query = '',
   onSelect,
 }: {
   rankedProjects: RankedProject[];
+  /** Filters rows by recipient name; ranks stay those of the full list. */
+  query?: string;
   onSelect: (project: RankedProject) => void;
 }) {
+  const needle = query.trim().toLowerCase();
+  const visibleProjects = rankedProjects
+    .map((project, rank) => ({ project, rank }))
+    .filter(({ project }) => !needle || project.name.toLowerCase().includes(needle));
+
   return (
     <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-y-auto">
@@ -30,8 +37,7 @@ export default function ProjectsTable({
             </tr>
           </thead>
           <tbody>
-            {rankedProjects.map((project, i) => {
-              const isStreaming = project.name in SEAL_ONCHAIN;
+            {visibleProjects.map(({ project, rank }) => {
               const nameWords = project.name.split(' ');
               const lastWord = nameWords.pop();
               const leadingName = nameWords.join(' ');
@@ -49,7 +55,7 @@ export default function ProjectsTable({
                   }}
                   className="border-t border-white/5 cursor-pointer transition-colors duration-150 hover:bg-[#00ff88]/5 focus:bg-[#00ff88]/5 focus:outline-none"
                 >
-                  <td className="px-4 py-3 text-white/40">{i + 1}</td>
+                  <td className="px-4 py-3 text-white/40">{rank + 1}</td>
                   <td className="px-4 py-3 text-white">
                     {leadingName && `${leadingName} `}
                     <span className="whitespace-nowrap">
@@ -67,16 +73,6 @@ export default function ProjectsTable({
                           <ExternalLink className="w-3.5 h-3.5 inline-block" />
                         </a>
                       )}
-                      {isStreaming && (
-                        <span className="ml-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] uppercase tracking-wider bg-[rgba(92,183,90,0.15)] text-dao-green align-[center]">
-                          <motion.span
-                            className="w-1.5 h-1.5 rounded-full inline-block bg-dao-green"
-                            animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
-                            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                          />
-                          live
-                        </span>
-                      )}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right text-dao-green tabular-nums whitespace-nowrap">
@@ -88,11 +84,20 @@ export default function ProjectsTable({
                 </tr>
               );
             })}
+            {visibleProjects.length === 0 && (
+              <tr className="border-t border-white/5">
+                <td colSpan={4} className="px-4 py-8 text-center text-white/50">
+                  No projects match “{query.trim()}”
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
       <p className="px-4 py-3 border-t border-white/10 text-sm text-white/50">
-        {rankedProjects.length} recipients (click row for full breakdown)
+        {needle
+          ? `${visibleProjects.length} of ${rankedProjects.length} recipients`
+          : <>{rankedProjects.length} recipients - SEAL &amp; SEAL911 stream live via Superfluid.</>}
       </p>
     </div>
   );
