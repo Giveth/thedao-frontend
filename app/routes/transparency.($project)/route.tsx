@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Search } from 'lucide-react';
+import { motion } from 'motion/react';
 import Footer from '~/components/Footer';
-import Header from '~/components/Header';
 import TextType from '~/components/text-animations/TextType';
 import { projectStreamedEth, useNow, useSealStreams } from '~/hooks/useSealStreams';
 import { generateMeta } from '~/utils/meta';
@@ -102,10 +102,40 @@ export default function Transparency() {
         style={{ backgroundImage: 'linear-gradient(142.716deg, rgb(44, 94, 134) 31.459%, rgb(31, 67, 95) 90.396%)' }}
       >
         <div className="relative z-10 max-w-[1100px] mx-auto px-6">
-          <Header
-            title="TheDAO is Transparent"
-            subtitle="Every ETH we send to Ethereum security is public, verifiable, and tracked on-chain."
-          />
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-normal text-white tracking-tight leading-none font-inter mb-6">
+              THE DAO IS
+              <br className="sm:hidden" />
+              <span className="hidden sm:inline">{' '}</span>
+              {/* Invisible cursor balancer - offsets the visible cursor's width on extra small screens for proper centering */}
+              <span className="inline-block mr-1 opacity-0 sm:hidden" aria-hidden="true">|</span>
+              <TextType
+                text={HERO_TEXTS}
+                as="span"
+                typingSpeed={190}
+                deletingSpeed={50}
+                pauseDuration={1500}
+                showCursor
+                cursorCharacter="|"
+                loop
+                textColors={HERO_TEXT_COLORS}
+              />
+            </h1>
+            <p className="text-xl text-dao-green mb-4">
+              Last updated {LAST_UPDATED} · streamed amounts update live
+            </p>
+            <motion.div
+              className="w-full h-px bg-gradient-to-r from-transparent via-[#00ff88]/50 to-transparent"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            />
+          </motion.div>
 
           <HeroStats sentEth={sentEth} sentUsd={sentUsd} />
 
@@ -145,29 +175,6 @@ export default function Transparency() {
             }
             onClose={() => navigate('/transparency', { preventScrollReset: true })}
           />
-
-          <h2 className="mt-24 text-3xl md:text-4.5xl lg:text-6xl font-normal text-white tracking-tight leading-none font-inter text-center">
-            THE DAO IS
-            <br className="sm:hidden" />
-            <span className="hidden sm:inline">{' '}</span>
-            {/* Invisible cursor balancer - offsets the visible cursor's width on extra small screens for proper centering */}
-            <span className="inline-block mr-1 opacity-0 sm:hidden" aria-hidden="true">|</span>
-            <TextType
-              text={HERO_TEXTS}
-              as="span"
-              typingSpeed={190}
-              deletingSpeed={50}
-              pauseDuration={1500}
-              showCursor
-              cursorCharacter="|"
-              loop
-              textColors={HERO_TEXT_COLORS}
-            />
-          </h2>
-
-          <p className="mt-16 text-center text-sm text-white/40">
-            Last updated {LAST_UPDATED} · streamed amounts update live from Ethereum mainnet
-          </p>
         </div>
       </section>
       <Footer />

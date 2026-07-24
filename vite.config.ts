@@ -4,6 +4,28 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+// Editors save files atomically via short-lived `<file>.tmp.*` files. When a
+// file watcher (vite's or react-router's chokidar) tries to watch one that has
+// already been renamed away, Deno's fs.watch rejects asynchronously where Node
+// silently ignores it, and the unhandled rejection kills the dev server. Vite's
+// own watcher is also told to ignore these paths below, but react-router dev
+// runs separate chokidar instances that take no such option, so swallow this
+// specific rejection process-wide.
+const g = globalThis as {
+  Deno?: unknown;
+  addEventListener?: (type: string, cb: (event: {
+    reason?: { name?: string; stack?: string };
+    preventDefault: () => void;
+  }) => void) => void;
+};
+if (g.Deno && g.addEventListener) {
+  g.addEventListener("unhandledrejection", (event) => {
+    if (event.reason?.name === "NotFound" && event.reason?.stack?.includes("FsWatcher")) {
+      event.preventDefault();
+    }
+  });
+}
+
 export default defineConfig({
   plugins: [
     tailwindcss(), 
@@ -68,6 +90,12 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+    watch: {
+      // Editors write changes atomically via short-lived `<file>.tmp.*` files.
+      // Deno's fs.watch throws an uncaught NotFound (crashing the dev server)
+      // when chokidar tries to watch one that has already been renamed away.
+      ignored: ["**/*.tmp.*"],
+    },
   },
   resolve: {
     alias: {

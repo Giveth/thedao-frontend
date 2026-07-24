@@ -133,7 +133,7 @@ export default function ProjectModal({
                 <BreakdownRow
                   label={
                     <>
-                      Matching pool
+                      TheDAO matching pool
                       <RoundTag />
                     </>
                   }
@@ -145,7 +145,7 @@ export default function ProjectModal({
                 <BreakdownRow
                   label={
                     <>
-                      Extra round inflow
+                      Community raised matching
                       <RoundTag />
                     </>
                   }
@@ -157,7 +157,7 @@ export default function ProjectModal({
                 <BreakdownRow
                   label={
                     <>
-                      Other donations
+                      Direct donations
                       <RoundTag />
                     </>
                   }

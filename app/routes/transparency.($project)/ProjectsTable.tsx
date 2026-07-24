@@ -75,7 +75,7 @@ export default function ProjectsTable({
                       )}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right text-dao-green tabular-nums whitespace-nowrap">
+                  <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
                     {formatEth(project.displayTotalEth)}
                   </td>
                   <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
