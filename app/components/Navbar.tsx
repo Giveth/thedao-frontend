@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 
-const navItems = [
+const navItems: { label: string; path: string; isNew?: boolean }[] = [
   { label: 'Home', path: '/' },
   { label: 'ETHSecurity Badges', path: '/ethsecurity-badges' },
   { label: 'Funding Rounds', path: '/funding-rounds' },
-  { label: 'Transparency', path: '/transparency', isNew: true },
+  { label: 'Transparency', path: '/transparency' },
 ];
 
 export default function Navbar() {

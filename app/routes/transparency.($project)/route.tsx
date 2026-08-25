@@ -10,7 +10,6 @@ import {
   getGrantsTotalEth,
   getGrantsTotalUsd,
   getMetaDescription,
-  LAST_UPDATED,
   projects,
   slugifyProject,
   SNAPSHOT_TIMESTAMP,
@@ -127,7 +126,7 @@ export default function Transparency() {
               />
             </h1>
             <p className="text-xl text-dao-green mb-4">
-              Last updated {LAST_UPDATED} · streamed amounts update live
+              The full record of what we fund. Streams update in real time.
             </p>
             <motion.div
               className="w-full h-px bg-gradient-to-r from-transparent via-[#00ff88]/50 to-transparent"

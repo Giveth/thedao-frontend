@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { motion } from 'motion/react'
 import { ArrowRight, ChevronDown, Coins, HelpCircle, MessageCircle, Shield } from 'lucide-react'
 import FadeContent from '../text-animations/FadeContent'
 import { FAQ_GROUPS } from '~/data/faq'
@@ -127,15 +126,6 @@ export default function FaqSection() {
           <div className="text-center mb-14">
             <h2 className="text-dao-green text-4xl md:text-5xl lg:text-[60px] font-light leading-[1.15] mb-4">
               Frequently Asked Questions
-              <motion.span
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: 'spring', stiffness: 400, damping: 15, delay: 0.3 }}
-                className="inline-block align-top mt-2 md:mt-3 ml-2 text-[9px] font-bold tracking-wider uppercase bg-dao-red text-white px-1.5 py-0.5 rounded-full leading-none shadow-md shadow-red-900/40"
-              >
-                new
-              </motion.span>
             </h2>
             <p className="text-xl text-white/80 mb-6">
               Everything you need to know about TheDAO Security Fund.
