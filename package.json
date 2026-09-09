@@ -13,6 +13,7 @@
     "typecheck": "deno task typecheck"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@react-router/fs-routes": "^7.9.5",
     "@react-router/node": "^7.11.0",
     "@resvg/resvg-wasm": "^2.6.2",

@@ -28,6 +28,8 @@ export type Project = {
   usdSent: number;
   /** Project website (or social profile when no website exists). */
   link: string;
+  /** Link to the project's post-round progress update (X post, forum, blog); empty when none. */
+  progressUpdate: string;
 };
 
 // =============================================================================
@@ -35,7 +37,7 @@ export type Project = {
 // =============================================================================
 
 const CSV_HEADER =
-  'project_name,matching_pool,extra_round_inflow,other_donors,other_donors_usd,total,usd_sent,link';
+  'project_name,matching_pool,extra_round_inflow,other_donors,other_donors_usd,total,usd_sent,link,progress_update';
 const EXPECTED_ROWS = 135;
 
 /** Split one CSV line, honoring double-quoted fields (names contain commas). */
@@ -73,7 +75,7 @@ export function parseRound1Csv(raw: string): Project[] {
     throw new Error(`round1.csv: unexpected header "${lines[0]}"`);
   }
   const rows = lines.slice(1).map((line) => {
-    const [name, matchingPool, extraRoundInflow, otherDonors, otherDonorsUsd, totalEth, usdSent, link] =
+    const [name, matchingPool, extraRoundInflow, otherDonors, otherDonorsUsd, totalEth, usdSent, link, progressUpdate] =
       splitCsvLine(line.trim());
     const project: Project = {
       name,
@@ -84,6 +86,7 @@ export function parseRound1Csv(raw: string): Project[] {
       totalEth: Number(totalEth),
       usdSent: Number(usdSent),
       link,
+      progressUpdate: progressUpdate ?? '',
     };
     if (!name || Number.isNaN(project.totalEth)) {
       throw new Error(`round1.csv: malformed row "${line}"`);

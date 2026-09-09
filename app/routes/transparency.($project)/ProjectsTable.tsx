@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Megaphone } from 'lucide-react';
 import { type Project } from './data';
 import { formatEth, formatUsd } from './format';
 
@@ -32,6 +32,7 @@ export default function ProjectsTable({
             <tr className="bg-dao-blue text-left text-xs uppercase tracking-wider text-white/60 font-inter-tight">
               <th className="px-4 py-3 font-medium w-10">#</th>
               <th className="px-4 py-3 font-medium">Recipient</th>
+              <th className="px-4 py-3 font-medium text-center whitespace-nowrap w-20">Update</th>
               <th className="px-4 py-3 font-medium text-right whitespace-nowrap w-32">Total (ETH)</th>
               <th className="px-4 py-3 font-medium text-right whitespace-nowrap w-32">USD when sent</th>
             </tr>
@@ -75,6 +76,21 @@ export default function ProjectsTable({
                       )}
                     </span>
                   </td>
+                  <td className="px-4 py-3 text-center">
+                    {project.progressUpdate && (
+                      <a
+                        href={project.progressUpdate}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`Progress update from ${project.name}`}
+                        title="Progress update"
+                        className="inline-block align-[center] text-white/50 hover:text-[#00ff88] transition-colors duration-200"
+                      >
+                        <Megaphone className="w-4 h-4 inline-block" />
+                      </a>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
                     {formatEth(project.displayTotalEth)}
                   </td>
@@ -86,7 +102,7 @@ export default function ProjectsTable({
             })}
             {visibleProjects.length === 0 && (
               <tr className="border-t border-white/5">
-                <td colSpan={4} className="px-4 py-8 text-center text-white/50">
+                <td colSpan={5} className="px-4 py-8 text-center text-white/50">
                   No projects match “{query.trim()}”
                 </td>
               </tr>

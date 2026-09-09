@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink, HelpCircle, Megaphone, X } from 'lucide-react';
 import { SITE_NAME, SITE_URL } from '~/data/site';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { getStreamUrl, SEAL_ONCHAIN, slugifyProject } from './data';
 import { formatEth, formatUsd } from './format';
 import type { RankedProject } from './ProjectsTable';
@@ -207,6 +208,38 @@ export default function ProjectModal({
                   detail={`≈ ${streamRate.toFixed(3)} ETH per day, ongoing`}
                 >
                   <span className="text-dao-green">{formatEth(streamedEth, 6)} ETH</span>
+                </BreakdownRow>
+              )}
+              {project.progressUpdate && (
+                <BreakdownRow
+                  label={
+                    <span className="inline-flex items-center gap-1.5">
+                      <Megaphone className="w-4 h-4" />
+                      Progress update
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label="What is a progress update?"
+                            className="inline-flex text-white/40 hover:text-white/80 transition-colors duration-200 cursor-help"
+                          >
+                            <HelpCircle className="w-3.5 h-3.5" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>Shared by the project after the round</TooltipContent>
+                      </Tooltip>
+                    </span>
+                  }
+                >
+                  <a
+                    href={project.progressUpdate}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-white hover:text-[#00ff88] transition-colors duration-200"
+                  >
+                    {new URL(project.progressUpdate).hostname}
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
                 </BreakdownRow>
               )}
             </div>
