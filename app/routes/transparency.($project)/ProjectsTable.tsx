@@ -32,9 +32,9 @@ export default function ProjectsTable({
             <tr className="bg-dao-blue text-left text-xs uppercase tracking-wider text-white/60 font-inter-tight">
               <th className="px-4 py-3 font-medium w-10">#</th>
               <th className="px-4 py-3 font-medium">Recipient</th>
-              <th className="px-4 py-3 font-medium text-center whitespace-nowrap w-20">Update</th>
               <th className="px-4 py-3 font-medium text-right whitespace-nowrap w-32">Total (ETH)</th>
               <th className="px-4 py-3 font-medium text-right whitespace-nowrap w-32">USD when sent</th>
+              <th className="px-4 py-3 font-medium text-center whitespace-nowrap w-40">Progress update</th>
             </tr>
           </thead>
           <tbody>
@@ -76,6 +76,12 @@ export default function ProjectsTable({
                       )}
                     </span>
                   </td>
+                  <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
+                    {formatEth(project.displayTotalEth)}
+                  </td>
+                  <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
+                    {formatUsd(project.displayUsdSent)}
+                  </td>
                   <td className="px-4 py-3 text-center">
                     {project.progressUpdate && (
                       <a
@@ -90,12 +96,6 @@ export default function ProjectsTable({
                         <Megaphone className="w-4 h-4 inline-block" />
                       </a>
                     )}
-                  </td>
-                  <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
-                    {formatEth(project.displayTotalEth)}
-                  </td>
-                  <td className="px-4 py-3 text-right text-white/70 tabular-nums whitespace-nowrap">
-                    {formatUsd(project.displayUsdSent)}
                   </td>
                 </tr>
               );
