@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { ExternalLink, Menu, X } from 'lucide-react';
 
-const navItems: { label: string; path: string; isNew?: boolean }[] = [
+const navItems: { label: string; path: string; isNew?: boolean; external?: boolean }[] = [
   { label: 'Home', path: '/' },
   { label: 'ETHSecurity Badges', path: '/ethsecurity-badges' },
   { label: 'Funding Rounds', path: '/funding-rounds' },
   { label: 'Transparency', path: '/transparency' },
+  { label: 'Initiatives', path: 'https://initiatives.thedao.fund', external: true },
 ];
 
 export default function Navbar() {
@@ -76,7 +77,8 @@ export default function Navbar() {
         {navItems.map((item, i) => {
           const isActive = location.pathname === item.path;
           return (
-            <div key={item.path} className="relative">
+            <div key={item.path} className="relative flex items-center gap-8">
+              {item.external && <span aria-hidden="true" className="h-5 w-px bg-white/15" />}
               {item.isNew && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -94,19 +96,35 @@ export default function Navbar() {
                 whileHover={{ y: -2 }}
                 className="inline-block"
               >
-                <Link
-                  to={item.path}
-                  ref={(el) => {
-                    linkRefs.current[i] = el;
-                  }}
-                  className={`relative inline-block text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
-                    isActive
-                      ? 'text-dao-green font-normal'
-                      : 'text-white/80 hover:text-dao-green font-light'
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                {item.external ? (
+                  <a
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ref={(el) => {
+                      linkRefs.current[i] = el;
+                    }}
+                    className="relative inline-flex items-center gap-1.5 text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight text-dao-green hover:text-dao-green/80 font-light"
+                  >
+                    {item.label}
+                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <Link
+                    to={item.path}
+                    ref={(el) => {
+                      linkRefs.current[i] = el;
+                    }}
+                    className={`relative inline-block text-[20px] leading-[36px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
+                      isActive
+                        ? 'text-dao-green font-normal'
+                        : 'text-white/80 hover:text-dao-green font-light'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </motion.div>
             </div>
           );
@@ -164,17 +182,37 @@ export default function Navbar() {
             >
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
+                const className = `w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-[16px] leading-[24px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
+                  isActive
+                    ? 'text-dao-green font-normal bg-white/5'
+                    : 'text-white/85 hover:text-dao-green hover:bg-white/5 font-light'
+                }`;
+                if (item.external) {
+                  return (
+                    <div key={item.path}>
+                      <div aria-hidden="true" className="my-2 mx-4 h-px bg-white/15" />
+                      <a
+                        href={item.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        role="menuitem"
+                        onClick={() => setMobileOpen(false)}
+                        className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-[16px] leading-[24px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight text-dao-green hover:text-dao-green/80 hover:bg-white/5 font-light"
+                      >
+                        <span>{item.label}</span>
+                        <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                        <span className="sr-only">(opens in a new tab)</span>
+                      </a>
+                    </div>
+                  );
+                }
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
                     role="menuitem"
                     onClick={() => setMobileOpen(false)}
-                    className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-[16px] leading-[24px] whitespace-nowrap transition-colors duration-200 cursor-pointer font-inter-tight ${
-                      isActive
-                        ? 'text-dao-green font-normal bg-white/5'
-                        : 'text-white/85 hover:text-dao-green hover:bg-white/5 font-light'
-                    }`}
+                    className={className}
                   >
                     <span>{item.label}</span>
                     {item.isNew && (
