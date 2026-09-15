@@ -25,7 +25,7 @@ export const rounds: Round[] = [
     id: 2,
     title: 'ETHSecurity Initiatives',
     description:
-      'TheDAO Security Fund’s new round is focused on Ethereum security initiatives: work that needs clear owners, coordinated funding, and teams ready to deliver. Propose the work. Fund the work. Build the work.',
+      'TheDAO Security Fund’s new round is focused on Ethereum security initiatives. Propose the work. Fund the work. Build the work.',
     startDate: '2026-09-15',
     image: '/funding-rounds/ethsecurity-initiatives.webp',
     cta: { label: 'Explore initiatives', href: 'https://initiatives.thedao.fund' },
