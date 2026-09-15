@@ -110,28 +110,48 @@ export default function RoundCard({
             <p className="leading-relaxed mb-4 text-white">{round.description}</p>
 
             {/* Meta */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm mb-6">
-              <span className="text-white">
-                Matching Pool: <span className="text-gray-300">{round.pool}</span>
-              </span>
-              <span className="text-white">
-                Round duration and dates: <span className="text-gray-300">{deadline}</span>
-              </span>
-            </div>
+            {(round.pool || round.startDate) && (
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm mb-6">
+                {round.pool && (
+                  <span className="text-white">
+                    Matching Pool: <span className="text-gray-300">{round.pool}</span>
+                  </span>
+                )}
+                {round.startDate && (
+                  <span className="text-white">
+                    Round duration and dates: <span className="text-gray-300">{deadline}</span>
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* CTA */}
-            {isOpen && (
-              <div className="flex flex-wrap gap-4">
-                <motion.a
-                  href="https://qf.giveth.io/qf/ethereum-security"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white px-8 py-3 rounded-xl shadow-lg shadow-red-900/50 transition-all duration-300"
-                >
-                  Donate
-                </motion.a>
+            {isOpen && (round.cta || round.secondaryCta) && (
+              <div className="flex flex-wrap gap-3">
+                {round.cta && (
+                  <motion.a
+                    href={round.cta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-block w-fit bg-dao-red hover:bg-dao-red-hover text-white text-sm px-5 py-2 rounded-lg shadow-lg shadow-red-900/50 transition-all duration-300"
+                  >
+                    {round.cta.label}
+                  </motion.a>
+                )}
+                {round.secondaryCta && (
+                  <motion.a
+                    href={round.secondaryCta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-block w-fit bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 hover:text-[#00ff88] hover:border-[#00ff88]/50 text-sm px-5 py-2 rounded-lg transition-all duration-300"
+                  >
+                    {round.secondaryCta.label}
+                  </motion.a>
+                )}
               </div>
             )}
           </>

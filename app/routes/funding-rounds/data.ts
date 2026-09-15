@@ -4,16 +4,36 @@ export type Round = {
   id: number;
   title: string;
   description: string;
-  pool: string;
-  /** Round window as ISO dates (YYYY-MM-DD). Omit both when the round is still TBD. */
+  /** Matching pool size. Omit when not yet announced. */
+  pool?: string;
+  /** Round window as ISO dates (YYYY-MM-DD). Omit both when the round is still TBD; omit only endDate for an open-ended round. */
   startDate?: string;
   endDate?: string;
+  /** Force a status instead of deriving it from the dates (e.g. a live round with no fixed window). */
+  status?: RoundStatus;
   image: string;
   /** Canonical URL to share for this round. Omit to hide the share button. */
   shareUrl?: string;
+  /** Primary call to action, shown while the round is open. */
+  cta?: { label: string; href: string };
+  /** Secondary (outlined) call to action, shown next to the primary one while the round is open. */
+  secondaryCta?: { label: string; href: string };
 };
 
 export const rounds: Round[] = [
+  {
+    id: 2,
+    title: 'ETHSecurity Initiatives',
+    description:
+      'TheDAO Security Fund’s new round is focused on Ethereum security initiatives: work that needs clear owners, coordinated funding, and teams ready to deliver. Propose the work. Fund the work. Build the work.',
+    startDate: '2026-09-15',
+    image: '/funding-rounds/ethsecurity-initiatives.webp',
+    cta: { label: 'Explore initiatives', href: 'https://initiatives.thedao.fund' },
+    secondaryCta: {
+      label: 'Learn more',
+      href: 'https://paragraph.com/@thedao.fund/round-two-starts-today-ethsecurity-initiatives',
+    },
+  },
   {
     id: 1,
     title: 'Ethereum Security',
@@ -24,13 +44,7 @@ export const rounds: Round[] = [
     endDate: '2026-05-14',
     image: '/funding-rounds/ethsecurity-round.webp',
     shareUrl: 'https://qf.giveth.io/qf/ethereum-security',
-  },
-  {
-    id: 2,
-    title: 'TBD - Coming late summer',
-    description: '',
-    pool: 'TBC',
-    image: '/funding-rounds/coming-soon.webp',
+    cta: { label: 'Donate', href: 'https://qf.giveth.io/qf/ethereum-security' },
   },
 ];
 
@@ -57,22 +71,28 @@ function parseDate(iso: string): Date {
 
 /** Derive the round status from its dates relative to `now`. */
 export function getRoundStatus(round: Round, now: Date = new Date()): RoundStatus {
-  if (!round.startDate || !round.endDate) return 'Coming Soon';
+  if (round.status) return round.status;
+  if (!round.startDate) return 'Coming Soon';
 
   const start = parseDate(round.startDate);
+  if (now < start) return 'Coming Soon';
+  if (!round.endDate) return 'Open Round'; // open-ended
+
   const end = parseDate(round.endDate);
   end.setUTCHours(23, 59, 59, 999); // the round is open through the whole end day
-
-  if (now < start) return 'Coming Soon';
   if (now > end) return 'Closed';
   return 'Open Round';
 }
 
-/** Human-readable date range, e.g. "April 23 – May 14, 2026". */
+/** Human-readable date range, e.g. "April 23 – May 14, 2026", or "From September 15, 2026" when open-ended. */
 export function getRoundDeadline(round: Round): string {
-  if (!round.startDate || !round.endDate) return 'TBA';
+  if (!round.startDate) return 'TBA';
 
   const start = parseDate(round.startDate);
+  if (!round.endDate) {
+    return `From ${MONTHS[start.getUTCMonth()]} ${start.getUTCDate()}, ${start.getUTCFullYear()}`;
+  }
+
   const end = parseDate(round.endDate);
   const startStr = `${MONTHS[start.getUTCMonth()]} ${start.getUTCDate()}`;
   const endStr = `${MONTHS[end.getUTCMonth()]} ${end.getUTCDate()}, ${end.getUTCFullYear()}`;
@@ -89,7 +109,13 @@ export function getRoundsMetaDescription(now: Date = new Date()): string {
 
   const open = rounds.find((r) => getRoundStatus(r, now) === 'Open Round');
   if (open) {
-    return `${intro} The ${open.title} round on Giveth has a ${open.pool} matching pool, open ${getRoundDeadline(open)}.`;
+    const dates = !open.startDate
+      ? 'open now'
+      : open.endDate
+        ? `open ${getRoundDeadline(open)}`
+        : `open since ${getRoundDeadline(open).replace(/^From /, '')}`;
+    const details = open.pool ? `has a ${open.pool} matching pool, ${dates}` : `is ${dates}`;
+    return `${intro} The ${open.title} round ${details}.`;
   }
 
   const upcoming = rounds.find((r) => getRoundStatus(r, now) === 'Coming Soon' && r.startDate);
