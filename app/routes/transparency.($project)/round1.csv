@@ -62,13 +62,13 @@ OpenSense Open Web3 Security,1.7411,0.4826,1.5939,3509.0,3.8176,7443.0,https://w
 Assertions.eth On-chain Transaction Guards for Ethereum,2.6111,0.7237,0.5841,1286.0,3.9189,7186.0,https://assertions.eth.limo,https://x.com/blossom_labs/status/2097785743414362215
 human.tech,1.8055,0.5004,1.3413,2953.0,3.6473,7033.0,https://human.tech,https://x.com/humntech/status/2085779643555324296
 Blobscan,2.4818,0.6879,0.5682,1251.0,3.7379,6859.0,https://blobscan.com,https://x.com/blobscan/status/2084653749537038733
-Simbolik: Security Toolkit for Solidity,2.5148,0.697,0.4406,970.0,3.6524,6652.0,https://www.simbolik.dev/,https://x.com/rv_inc/status/2087890644941381809
+Simbolik: Security Toolkit for Solidity,2.5148,0.697,0.4406,970.0,3.6524,6652.0,https://www.simbolik.dev/,https://x.com/rv_inc/status/2087910913290674490
 Safe OpenSig: Eliminating Blind Signing,2.505,0.6943,0.3625,798.0,3.5618,6458.0,https://www.candide.dev/opensig,
 Soldeer,2.5652,0.711,0.2766,609.0,3.5528,6405.0,https://soldeer.xyz,https://x.com/m4rio_eth/status/2080181896416231458
 Open-Source AI Security Triage by HackenProof,1.7578,0.4872,1.0538,2320.0,3.2988,6292.0,https://hackenproof.com/,https://x.com/HackenProof/status/2089439768518004762
 SCAR: AI Retrieval for Smart Contract Security,1.7302,0.4796,1.0747,2366.0,3.2845,6275.0,https://huggingface.co/datasets/Farseen0/scar-corpus,https://x.com/Farseen0/status/2095279896260137373
 Encrypt the Mempool! Stopping Toxic MEV & Censorship,2.2377,0.6202,0.5296,1166.0,3.3875,6222.0,https://shutter.network/,https://x.com/ShutterNetwork/status/2082794054379868366
-K Stack: The Formal Verification Layer for Ethereum,2.346,0.6502,0.3956,871.0,3.3919,6172.0,https://runtimeverification.com/,https://x.com/rv_inc/status/2087890644941381809
+K Stack: The Formal Verification Layer for Ethereum,2.346,0.6502,0.3956,871.0,3.3919,6172.0,https://runtimeverification.com/,https://x.com/rv_inc/status/2087910913290674490
 zkbugs <> AI,2.4374,0.6756,0.2916,642.0,3.4046,6149.0,https://www.zksecurity.xyz/,https://x.com/zksecurityXYZ/status/2085373545501139215
 Tool Against Price Manipulation Attacks in DeFi on EVM,1.6648,0.4614,0.9775,2152.0,3.1037,5914.0,https://www.quantstamp.com,https://x.com/dr_zircuit/status/2081891294209507407
 Lights in Dark Rooms,1.9615,0.5437,0.5642,1242.0,3.0693,5674.0,https://chainpatrol.com/,https://x.com/ChainPatrol/status/2084715700644676055
@@ -85,7 +85,7 @@ SomaXBT,1.6827,0.4664,0.3021,665.0,2.4511,4467.0,https://paragraph.com/somaxbt.e
 EVMDecompiler: See What Smart Contracts Really Do,1.7694,0.4904,0.1971,434.0,2.457,4432.0,https://evmdecompiler.com/,https://x.com/d23e_AG/status/2081137247286407514
 soldb - Open-Source Solidity Debugger,1.6322,0.4524,0.2771,610.0,2.3617,4298.0,https://walnut.dev/,
 Open-Source Smart Contract Firewall,0.7826,0.2169,1.0915,2403.0,2.091,4171.0,https://ivanvolov.github.io/moat/,https://x.com/LisVikkk/status/2095295704444899719
-Nihilium,1.4042,0.3892,0.3043,670.0,2.0977,3843.0,https://nihilium.io,https://x.com/nihiliumio/status/2079840938755580055
+Nihilium,1.4042,0.3892,0.3043,670.0,2.0977,3843.0,https://nihilium.io,https://x.com/nihiliumio/status/2085365294390706498
 Etherform,0.2614,0.0725,1.4444,3180.0,1.7783,3771.0,https://x.com/breadcoop,
 LLZK Maintenance & Verification Infrastructure Grant,1.3027,0.3611,0.3784,833.0,2.0421,3776.0,https://veridise.com/,https://x.com/VeridiseInc/status/2081748774699819245
 Pharos Watch: Transparent Stablecoins Analytics,1.064,0.2949,0.5478,1206.0,1.9067,3610.0,https://pharos.watch,https://x.com/PharosWatch/status/2080342378737549436
@@ -107,7 +107,7 @@ EVVM,0.6084,0.1686,0.5001,1101.0,1.2771,2476.0,https://evvm.info,https://x.com/R
 Verifereum,0.8496,0.2355,0.1917,422.0,1.2768,2342.0,https://verifereum.org/,
 Self-Custodial Agent Authorization for Ethereum,0.4329,0.12,0.5969,1314.0,1.1497,2292.0,https://functor.sh/,https://x.com/FunctorNetwork/status/2095255643372257430
 Coalition to Change Crypto Freezes and Recovery,0.8323,0.2307,0.1476,325.0,1.2106,2206.0,https://zeroshadow.io/blog/north-korea-laundered-usd1-billion-of-crypto-in-4-months-how-industry-leaders-can-change-crypto/,
-ERCx: Property Testing for ERC Token Standards,0.7832,0.2171,0.1917,422.0,1.192,2192.0,https://runtimeverification.com/,https://x.com/rv_inc/status/2087890644941381809
+ERCx: Property Testing for ERC Token Standards,0.7832,0.2171,0.1917,422.0,1.192,2192.0,https://runtimeverification.com/,https://x.com/rv_inc/status/2087910913290674490
 Unruggable,0.758,0.2101,0.1667,367.0,1.1348,2080.0,https://unruggable.com,https://x.com/unruggable_eth/status/2079959341390569597
 Transaction graph,0.7981,0.2212,0.1022,225.0,1.1215,2028.0,https://tx-graph-eight.vercel.app/,
 Northscan by Heiner,0.7089,0.1965,0.1195,263.0,1.0248,1865.0,https://northscan.co/,https://x.com/north_scan/status/2080389386433069321
