@@ -131,13 +131,6 @@ export const USD_PER_ETH_STREAMED = 2017.98;
 /** Date of the last round1.csv snapshot (streamed amounts update live on top). */
 export const LAST_UPDATED = 'July 17, 2026';
 
-/**
- * Unix seconds of the round1.csv snapshot (2026-07-17 13:38 UTC). Streamed
- * amounts are rendered as of this moment until the live clock starts on the
- * client, keeping prerendered HTML and hydration in sync.
- */
-export const SNAPSHOT_TIMESTAMP = 1784295499;
-
 // =============================================================================
 // On-chain configuration (SEAL & SEAL 911 grants + Superfluid streams)
 // =============================================================================

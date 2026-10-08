@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+  # Daily rebuild so the prerendered transparency page shows current streamed amounts.
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 jobs:
   deploy:

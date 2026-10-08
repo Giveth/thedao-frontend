@@ -1,5 +1,6 @@
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
+import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -26,7 +27,16 @@ if (g.Deno && g.addEventListener) {
   });
 }
 
+// Unix seconds of this build. The transparency page prerenders streamed
+// amounts as of this moment, so the scheduled daily deploy keeps the static
+// HTML fresh. Pinned in the environment so the prerender and client bundles
+// get the same value even if this config is evaluated more than once.
+process.env.BUILD_TIMESTAMP ??= String(Math.floor(Date.now() / 1000));
+
 export default defineConfig({
+  define: {
+    __BUILD_TIMESTAMP__: process.env.BUILD_TIMESTAMP,
+  },
   plugins: [
     tailwindcss(), 
     reactRouter(), 

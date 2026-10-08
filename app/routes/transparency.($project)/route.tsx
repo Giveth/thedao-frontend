@@ -12,7 +12,6 @@ import {
   getMetaDescription,
   projects,
   slugifyProject,
-  SNAPSHOT_TIMESTAMP,
   USD_PER_ETH_STREAMED,
 } from './data';
 import HeroStats from './HeroStats';
@@ -61,8 +60,8 @@ export default function Transparency() {
   const now = useNow(1000);
 
   // Before the client clock starts (and in prerendered HTML), streamed
-  // amounts are rendered as of the CSV snapshot so hydration matches.
-  const nowMs = now ?? SNAPSHOT_TIMESTAMP * 1000;
+  // amounts are rendered as of the build so hydration matches.
+  const nowMs = now ?? __BUILD_TIMESTAMP__ * 1000;
 
   const rankedProjects: RankedProject[] = useMemo(
     () =>

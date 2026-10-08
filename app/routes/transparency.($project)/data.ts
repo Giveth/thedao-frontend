@@ -14,7 +14,6 @@ export {
   OPERATIONAL_MULTISIG,
   SEAL_ONCHAIN,
   slugifyProject,
-  SNAPSHOT_TIMESTAMP,
   SUPERFLUID_SUBGRAPH_URL,
   USD_PER_ETH_STREAMED,
 } from '../../../lib/transparency-data';
