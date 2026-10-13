@@ -79,9 +79,8 @@ export default function TreasurySection() {
             </p>
 
             {/* Tagline */}
-            <p className="text-white text-2xl font-normal leading-snug text-center">
-              An endowment for Ethereum security,<br />
-              earning 1,800 ETH a year.
+            <p className="text-white text-xl md:text-2xl font-normal leading-snug text-center md:max-w-md">
+              An endowment for Ethereum security, earning 1,800 ETH a year.
             </p>
 
             {/* CTA Button */}
