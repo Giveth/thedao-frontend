@@ -9,6 +9,7 @@ const navItems: { label: string; path: string; isNew?: boolean; external?: boole
   { label: 'Funding Rounds', path: '/funding-rounds' },
   { label: 'Transparency', path: '/transparency' },
   { label: 'Initiatives', path: 'https://initiatives.thedao.fund', external: true },
+  { label: 'Security Hub', path: 'https://securityhub.thedao.fund', external: true, isNew: true },
 ];
 
 export default function Navbar() {
