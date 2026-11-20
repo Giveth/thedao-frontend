@@ -73,8 +73,12 @@ export async function fetchTreasuryData(
     transport: http(ethRpcUrl, { batch: true }),
   });
 
+  // allowFailure: false makes a failed RPC throw: otherwise viem reports each
+  // call's error in place and the balances would read as 0, a valid-looking
+  // answer that the API would then cache.
   const [ethResults, daoTokenResults, wethResults, daiResults, staked] = await Promise.all([
     client.multicall({
+      allowFailure: false,
       contracts: ETH_TREASURY_ADDRESSES.map((address) => ({
         address: MULTICALL3_ADDRESS,
         abi: multicall3Abi,
@@ -83,6 +87,7 @@ export async function fetchTreasuryData(
       })),
     }),
     client.multicall({
+      allowFailure: false,
       contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
         address: THE_DAO_TOKEN,
         abi: erc20BalanceOfAbi,
@@ -91,6 +96,7 @@ export async function fetchTreasuryData(
       })),
     }),
     client.multicall({
+      allowFailure: false,
       contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
         address: WETH_TOKEN,
         abi: erc20BalanceOfAbi,
@@ -99,6 +105,7 @@ export async function fetchTreasuryData(
       })),
     }),
     client.multicall({
+      allowFailure: false,
       contracts: ERC20_TREASURY_ADDRESSES.map((address) => ({
         address: DAI_TOKEN,
         abi: erc20BalanceOfAbi,
@@ -109,17 +116,17 @@ export async function fetchTreasuryData(
     fetchStakedBalance(beaconApiUrl),
   ]);
 
-  const toEthBalances = (results: typeof ethResults): EthBalances => ({
-    ogCuratorsMultisig: ((results[0].result as bigint) ?? 0n).toString(),
-    operationalMultisig: ((results[1].result as bigint) ?? 0n).toString(),
-    stakingMultisig: ((results[2].result as bigint) ?? 0n).toString(),
-    extraBalance: ((results[3].result as bigint) ?? 0n).toString(),
+  const toEthBalances = (results: readonly bigint[]): EthBalances => ({
+    ogCuratorsMultisig: results[0].toString(),
+    operationalMultisig: results[1].toString(),
+    stakingMultisig: results[2].toString(),
+    extraBalance: results[3].toString(),
   });
 
-  const toErc20Balances = (results: typeof daoTokenResults): Erc20Balances => ({
-    ogCuratorsMultisig: ((results[0].result as bigint) ?? 0n).toString(),
-    operationalMultisig: ((results[1].result as bigint) ?? 0n).toString(),
-    stakingMultisig: ((results[2].result as bigint) ?? 0n).toString(),
+  const toErc20Balances = (results: readonly bigint[]): Erc20Balances => ({
+    ogCuratorsMultisig: results[0].toString(),
+    operationalMultisig: results[1].toString(),
+    stakingMultisig: results[2].toString(),
   });
 
   return {
