@@ -69,7 +69,8 @@ export async function fetchTreasuryData(
 ): Promise<TreasuryResponse> {
   const client = createPublicClient({
     chain: mainnet,
-    transport: http(ethRpcUrl),
+    // The four multicalls below go out as one JSON-RPC batch request.
+    transport: http(ethRpcUrl, { batch: true }),
   });
 
   const [ethResults, daoTokenResults, wethResults, daiResults, staked] = await Promise.all([
