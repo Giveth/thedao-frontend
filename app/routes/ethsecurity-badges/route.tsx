@@ -47,7 +47,7 @@ export default function EthSecurityBadge() {
           <Header
             title="ETHSecurity Badge"
             subtitle="For the top Ethereum Security Experts"
-            video="/eth-security-badge.mp4"
+            video="/eth-security-badge"
             cta={{ href: 'https://t.me/ETHSecurityBadges_bot', label: 'Apply' }}
           />
 

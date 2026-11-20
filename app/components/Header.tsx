@@ -10,6 +10,7 @@ export default function Header({
 }: {
   title: string;
   subtitle: string;
+  /** Video path without extension: `<video>.webm` (VP9) is played where supported, `<video>.mp4` (H.264) elsewhere. */
   video?: string;
   cta?: HeaderCta;
 }) {
@@ -31,9 +32,11 @@ export default function Header({
               loop
               muted
               playsInline
-              src={video}
               className="max-w-md w-full rounded-full"
-            />
+            >
+              <source src={`${video}.webm`} type="video/webm" />
+              <source src={`${video}.mp4`} type="video/mp4" />
+            </video>
           </motion.div>
         </motion.div>
       )}
