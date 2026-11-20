@@ -1,13 +1,24 @@
 import { useTreasuryBalance } from '~/hooks/useTreasuryBalance'
 import { useEthPrice } from '~/hooks/useEthPrice'
-import CountUp from '../text-animations/CountUp'
+import RisingNumber from '../text-animations/RisingNumber'
 
-function formatNumber(n: number): string {
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(n)
-}
+const ethFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 })
+const usdFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+const formatEth = (n: number): [string, string] => [ethFormat.format(n), ' ETH']
+const formatUsd = (n: number): [string, string] =>
+  n >= 1_000_000_000
+    ? ['$' + usdFormat.format(n / 1_000_000_000), ' Billion']
+    : ['$' + usdFormat.format(n / 1_000_000), ' Million']
+
+// While the balance and price load, the counts already climb toward these.
+// They must stay below the real values, or the count turns around when the
+// data lands. In Nov 2026 the treasury was ~74,000 ETH (~69,000 staked) at
+// ~$1,650 an ETH ($122M), so these hold unless the treasury shrinks by a fifth
+// or ETH falls under ~$1,200.
+const ETH_FLOOR = 60_000
+const USD_FROM = 50_000_000
+const USD_FLOOR = 90_000_000
 
 export default function TreasurySection() {
   const { totals, formattedTotals, isLoading, isError } = useTreasuryBalance()
@@ -18,8 +29,7 @@ export default function TreasurySection() {
     ? totals.eth + totals.weth + (totals.dai * daiToEthRate) + (totals.dao / 100) // DAO is in 100ths of ETH
     : null
 
-  const formattedBalance = totalBalanceEth ? formatNumber(totalBalanceEth) : null
-  const usdValue = ethPrice && totalBalanceEth ? totalBalanceEth * ethPrice : null
+  const usdValue = ethPrice && totalBalanceEth ? totalBalanceEth * ethPrice : undefined
 
   // Build title showing non-zero balances only
   const titleParts: string[] = []
@@ -52,30 +62,31 @@ export default function TreasurySection() {
                 className="text-4xl md:text-8xl font-semibold tracking-tight leading-tight"
                 title={isLoading || isError || isPriceLoading ? undefined : titleText}
               >
-                {isLoading || isPriceLoading ? <span className="text-white">...</span> : isError || isPriceError ? <span className="text-white">Error</span> : (
-                  <>
-                    <span className="text-dao-green tabular-nums inline-block min-w-[3ch]">{formattedBalance}</span>
-                    <span className="text-white"> ETH</span>
-                  </>
+                {isError || isPriceError ? <span className="text-white">Error</span> : (
+                  <RisingNumber
+                    value={totalBalanceEth ?? undefined}
+                    from={0}
+                    floor={ETH_FLOOR}
+                    format={formatEth}
+                    className="text-dao-green tabular-nums inline-block min-w-[3ch]"
+                    suffixClassName="text-white whitespace-pre"
+                  />
                 )}
               </span>
             </div>
 
             {/* USD Value */}
             <p className="text-2xl md:text-7xl font-normal leading-normal text-center">
-              {isPriceLoading || isLoading ? <span className="text-white">...</span> : isPriceError || isError ? <span className="text-white">Error</span> : usdValue ? (
-                usdValue >= 1_000_000_000 ? (
-                  <>
-                    <span className="text-dao-green">$<CountUp from={0.10} to={Number((usdValue / 1_000_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
-                    <span className="text-white"> Billion</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-dao-green">$<CountUp from={100.00} to={Number((usdValue / 1_000_000).toFixed(2))} duration={1} className="tabular-nums inline-block min-w-[3ch]" /></span>
-                    <span className="text-white"> Million</span>
-                  </>
-                )
-              ) : <span className="text-white">...</span>}
+              {isPriceError || isError ? <span className="text-white">Error</span> : (
+                <RisingNumber
+                  value={usdValue}
+                  from={USD_FROM}
+                  floor={USD_FLOOR}
+                  format={formatUsd}
+                  className="text-dao-green tabular-nums inline-block min-w-[3ch]"
+                  suffixClassName="text-white whitespace-pre"
+                />
+              )}
             </p>
 
             {/* Tagline */}
