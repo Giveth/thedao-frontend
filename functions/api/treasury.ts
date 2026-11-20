@@ -67,6 +67,18 @@ async function lastSnapshot(cacheKey: Request): Promise<Snapshot | null> {
   return memory;
 }
 
+/**
+ * The error as one line, for the logs. viem's messages quote the request URL,
+ * and an RPC URL often carries an API key, so both configured URLs are masked.
+ */
+function logSafe(error: unknown, env: Env): string {
+  let text = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  for (const url of [env.ETH_RPC_URL, env.BEACON_API_URL]) {
+    if (url) text = text.replaceAll(url, "<redacted>");
+  }
+  return text;
+}
+
 function respond(snapshot: Snapshot): Response {
   return new Response(snapshot.body, {
     headers: {
@@ -88,7 +100,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   if (last && ageSecs < STALE_SECS) {
     if (ageSecs >= FRESH_SECS) {
       context.waitUntil(
-        refresh(context.env, cacheKey).catch((error) => console.error("Treasury refresh failed:", error)),
+        refresh(context.env, cacheKey).catch((error) =>
+          console.error("Treasury refresh failed:", logSafe(error, context.env))
+        ),
       );
     }
     return respond(last);
@@ -97,7 +111,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     return respond(await refresh(context.env, cacheKey));
   } catch (error) {
-    console.error("Treasury API error:", error);
+    console.error("Treasury API error:", logSafe(error, context.env));
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
