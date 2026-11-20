@@ -5,17 +5,26 @@ import Navbar from "~/components/Navbar";
 import type { Route } from "./+types/root";
 import "./app.css";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-];
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Critical CSS: paint the brand background before any stylesheet
+            arrives, and keep the body invisible until app.css applies (it
+            ends with `body{visibility:visible}`). The script is a safety net
+            so a failed stylesheet fetch still shows the page. */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: "html{background:#28567a;color:#fff}body{margin:0;visibility:hidden}",
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "setTimeout(function(){document.body.style.visibility='visible'},4000);",
+          }}
+        />
         <Meta />
         <Links />
       </head>

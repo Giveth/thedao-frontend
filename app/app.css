@@ -1,8 +1,10 @@
-/* Import Inter and Inter Tight fonts from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Inter+Tight:wght@300;400;500;600;700&display=swap');
-
 @import "tailwindcss";
 @import "tw-animate-css";
+/* Self-hosted variable fonts (one file per script covers every weight); Vite bundles
+   them into /assets, so no third-party stylesheet is chained behind this one and
+   blocks the first paint. */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/inter-tight";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -52,8 +54,8 @@
   --color-dao-green: #5CB75A;
   
   /* Custom font family */
-  --font-inter: 'Inter', sans-serif;
-  --font-inter-tight: 'Inter Tight', 'Inter', sans-serif;
+  --font-inter: 'Inter Variable', sans-serif;
+  --font-inter-tight: 'Inter Tight Variable', 'Inter Variable', sans-serif;
   
   /* Custom font size (40px - no Tailwind equivalent) */
   --font-size-4\.5xl: 2.5rem;
@@ -166,7 +168,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-family: 'Inter Tight Variable', 'Inter Variable', sans-serif;
   }
 }
 
@@ -175,3 +177,9 @@
   filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1)) drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.1));
 }
 
+/* Reveal: root.tsx hides <body> inline until this stylesheet is applied, so a
+   slow CSS fetch never paints unstyled content. Unlayered on purpose: it must
+   beat the (unlayered) inline rule. */
+body {
+  visibility: visible;
+}
