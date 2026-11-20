@@ -10,7 +10,10 @@ export default function Header({
 }: {
   title: string;
   subtitle: string;
-  /** Video path without extension: `<video>.webm` (VP9) is played where supported, `<video>.mp4` (H.264) elsewhere. */
+  /**
+   * Square video, path without extension: `<video>.webm` (VP9) is played where
+   * supported, `<video>.mp4` (H.264) elsewhere.
+   */
   video?: string;
   cta?: HeaderCta;
 }) {
@@ -23,7 +26,10 @@ export default function Header({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
+          {/* Sized before the video loads (a <video> without its file is 300x150),
+              so the title below does not jump when it arrives. */}
           <motion.div
+            className="w-full max-w-md"
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
@@ -32,7 +38,9 @@ export default function Header({
               loop
               muted
               playsInline
-              className="max-w-md w-full rounded-full"
+              width={500}
+              height={500}
+              className="block w-full aspect-square rounded-full"
             >
               <source src={`${video}.webm`} type="video/webm" />
               <source src={`${video}.mp4`} type="video/mp4" />
